@@ -1,0 +1,37 @@
+{
+  "name": "shared-ai-skills",
+  "version": "0.1.0-draft",
+  "scope": "Common agent skills intended to be reused across Laravel/API projects.",
+  "consumer_policy": {
+    "pinning": "Projects should pin this repository by git tag or commit SHA before loading shared skills.",
+    "project_specific_rules": "Domain rules belong in the consuming project, not in this shared repository.",
+    "upgrade_review": "Shared skill upgrades should be reviewed against at least one real project before broad rollout."
+  },
+  "skills": [
+    {
+      "name": "project-truth-source",
+      "path": "skills/common/project-truth-source",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-migration-safety",
+      "path": "skills/common/laravel-migration-safety",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-api-contract",
+      "path": "skills/common/laravel-api-contract",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-test-review-sop",
+      "path": "skills/common/laravel-test-review-sop",
+      "stability": "draft"
+    },
+    {
+      "name": "ai-change-review-guardrails",
+      "path": "skills/common/ai-change-review-guardrails",
+      "stability": "draft"
+    }
+  ]
+}
