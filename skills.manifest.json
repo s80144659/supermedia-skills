@@ -1,5 +1,5 @@
 {
-  "name": "shared-ai-skills",
+  "name": "skills_backend",
   "version": "0.1.0-draft",
   "scope": "Common agent skills intended to be reused across Laravel/API projects.",
   "consumer_policy": {
