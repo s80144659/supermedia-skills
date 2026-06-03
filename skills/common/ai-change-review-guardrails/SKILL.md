@@ -3,34 +3,36 @@ name: ai-change-review-guardrails
 description: Use before accepting AI-generated or large backend/API/scheduler/security changes, especially when hidden assumptions or blast radius matter.
 ---
 
-# AI Change Review Guardrails
+# AI 變更審查守門規則
 
-Use this skill as a pre-merge review checklist for AI-generated or broad changes.
+使用本技能作為 AI 生成變更或大範圍變更的合併前審查清單。
 
-## Review Passes
+## 審查面向
 
-1. Spec fit: confirm the change implements the latest explicit requirement.
-2. Blast radius: list touched layers and shared contracts.
-3. Hidden assumptions: identify inferred product rules, missing third-party contracts, time zone assumptions, and retry/idempotency assumptions.
-4. Trust boundaries: check untrusted input, auth, authorization, rate limits, file uploads, external APIs, and sensitive data exposure.
-5. Failure modes: check timeout, duplicate request, retry, partial write, race condition, and rollback behavior.
-6. Verification: run tests or explain what could not be verified.
+1. 規格符合度：確認變更實作的是最新且明確的需求。
+2. 影響範圍：列出受影響的層級與共享契約。
+3. 隱藏假設：找出推論出的產品規則、缺失的第三方契約、時區假設，以及重試與冪等性假設。
+4. 信任邊界：檢查未受信任輸入、認證、授權、速率限制、檔案上傳、外部 API 與敏感資料暴露。
+5. 失效模式：檢查逾時、重複請求、重試、部分寫入、競態條件與回滾行為。
+6. 驗證證據：執行測試，或說明哪些內容無法驗證。
 
-## Backend/API Checklist
+## 後端/API 檢查清單
 
-- Routes have the expected middleware and throttle behavior.
-- Form Requests validate required, nullable, enum, date, and money fields.
-- Responses use the project wrapper/resource style.
-- State transitions are guarded and tested.
-- Database writes are transactional when multi-table consistency matters.
-- External calls are timeout-bound and logged without leaking secrets.
-- Audit logs exist for admin or eligibility-changing actions.
+變更涉及後端、API、排程或安全行為時，使用此檢查面向。
 
-## Stop Conditions
+- 路由具備預期的中介層與限流行為。
+- 請求驗證器或結構定義覆蓋必填、可空、列舉、日期與金額欄位。
+- 回應使用專案既有的包裝、序列化或回應映射風格。
+- 狀態轉換有保護條件，且有測試保護。
+- 多表一致性重要時，資料庫寫入以交易保護。
+- 外部呼叫有逾時邊界，且日誌不洩漏機密。
+- 管理員操作或資格變更操作有稽核日誌。
 
-Stop before merge when:
+## 停止條件
 
-- The change depends on a draft or conflicting spec.
-- A destructive migration lacks an explicit rollout or rollback plan.
-- A public or admin API lacks tests for auth and failure paths.
-- Verification was skipped for behavior that can be tested locally.
+遇到以下情況，合併前應停止：
+
+- 變更依賴草稿或彼此衝突的規格。
+- 破壞性資料庫遷移缺少明確發布或回復計畫。
+- 公開或管理 API 缺少認證與失敗路徑測試。
+- 可在本機測試的行為被跳過驗證。

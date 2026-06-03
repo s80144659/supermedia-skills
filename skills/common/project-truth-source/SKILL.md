@@ -3,32 +3,32 @@ name: project-truth-source
 description: Use when a task depends on project specs, implementation behavior, tests, or docs that may disagree across files or sources.
 ---
 
-# Project Truth Source
+# 專案真相來源
 
-Use this skill to keep project work anchored when specifications, code, tests, and docs may not agree.
+當規格、程式碼、測試與文件可能不一致時，使用本技能讓專案工作維持在可追溯的真相來源上。
 
-## Core Rules
+## 核心規則
 
-- Treat named specs and decision docs as the source of intended behavior.
-- Treat code and tests as the source of currently executable behavior.
-- When intended behavior and executable behavior conflict, stop and list the conflict before changing behavior.
-- Prefer the newest explicit decision over older generated docs, but record that precedence instead of silently assuming it.
-- Before finalizing, re-check touched files, tests, and generated docs so the response matches the actual workspace state.
+- 將明確指定的規格與決策文件視為預期行為來源。
+- 將程式碼與測試視為目前可執行行為來源。
+- 預期行為與可執行行為衝突時，變更行為前先停止並列出衝突。
+- 最新明確決策優先於較舊的產生文件，但要記錄此優先順序，不要默默假設。
+- 完成前重新檢查變更過的檔案、測試與產生文件，確保回覆符合工作區實際狀態。
 
-## Standard Output
+## 標準輸出
 
-For implementation or review work, include:
+實作或審查工作應包含：
 
-1. Impacted layers: database, service, controller, middleware, route, resource, job, scheduler, docs, tests.
-2. Synced artifacts: related controllers, services, policies, resources, migrations, tests, docs.
-3. Boundary checks: auth, authorization, tenant/project isolation, state machine, rate limit, audit log, data contract.
-4. Verification: exact commands run and whether they passed.
+1. 影響層：資料庫、服務、控制器、中介層、路由、資源、工作、排程、文件、測試。
+2. 已同步產物：相關控制器、服務、政策、資源、遷移、元件、客戶端、結構、測試、文件。
+3. 邊界檢查：認證、授權、租戶/專案隔離、狀態機、速率限制、稽核日誌、資料契約、UI 狀態、客戶端契約。
+4. 驗證：實際執行的指令與是否通過。
 
-## Stop Conditions
+## 停止條件
 
-Stop and ask for a decision when:
+遇到以下情況，停止並請使用者決策：
 
-- A destructive data change is required.
-- Specs disagree on auth, money, eligibility, status transitions, notifications, or legal/compliance behavior.
-- The only available source is stale or explicitly marked draft.
-- A test protects a behavior that the latest product rule appears to retire.
+- 需要破壞性資料變更。
+- 規格對認證、金額、資格、狀態轉換、通知或法務/合規行為互相衝突。
+- 唯一可用來源已過期，或明確標示為草稿。
+- 某個測試保護的行為看起來已被最新產品規則退場。

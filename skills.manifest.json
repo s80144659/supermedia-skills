@@ -1,36 +1,189 @@
 {
-  "name": "skills_backend",
+  "schema_version": 1,
+  "name": "supermedia-skills",
   "version": "0.1.0-draft",
-  "scope": "Common agent skills intended to be reused across Laravel/API projects.",
+  "scope": "Shared Supermedia engineering skills intended to be reused by Codex, Claude, and developers across software projects.",
+  "governance": {
+    "owner": "Supermedia Engineering",
+    "repository_type": "pure_skill_repository",
+    "repository_url": null,
+    "skill_root": "skills",
+    "skill_path_format": "skills/<scope>/<skill-name>",
+    "documentation_language": "Chinese governance documents and SKILL.md bodies with English-first skill metadata.",
+    "metadata_policy": "SKILL.md frontmatter name and description should be English-first for cross-agent discovery; SKILL.md bodies should use Chinese except for necessary technical terms, tool names, code, commands, and field names.",
+    "scope_policy": "common is for framework-agnostic shared engineering workflows; framework-specific shared skills should use a technology scope such as laravel."
+  },
   "consumer_policy": {
+    "pinning_required": true,
     "pinning": "Projects should pin this repository by git tag or commit SHA before loading shared skills.",
     "project_specific_rules": "Domain rules belong in the consuming project, not in this shared repository.",
-    "upgrade_review": "Shared skill upgrades should be reviewed against at least one real project before broad rollout."
+    "local_override_policy": "Consuming projects should not edit shared skills locally. Project-specific instructions should live beside the consuming project and reference the pinned shared skills source.",
+    "conflict_resolution": "Project runtime constraints can override shared guidance for that project, but shared skill behavior should be changed in this repository rather than forked silently.",
+    "upgrade_review": "Shared skill upgrades should be reviewed against at least one real project before broad rollout.",
+    "consumer_project_template": "templates/consuming-project-AGENTS.md",
+    "supported_integration_methods": [
+      "git-submodule",
+      "vendored-copy",
+      "agent-skill-path"
+    ]
+  },
+  "skill_format": {
+    "required_files": [
+      "SKILL.md"
+    ],
+    "required_frontmatter": [
+      "name",
+      "description"
+    ],
+    "optional_directories": [
+      "scripts",
+      "references",
+      "assets"
+    ],
+    "naming": {
+      "scope": "lowercase hyphen-case",
+      "skill": "lowercase hyphen-case"
+    }
+  },
+  "stability": {
+    "allowed": [
+      "draft",
+      "stable",
+      "deprecated"
+    ],
+    "definitions": {
+      "draft": "May change quickly while trigger quality, workflow shape, and compatibility are still being proven.",
+      "stable": "Reviewed for shared use and should only change through intentional behavior review.",
+      "deprecated": "Retained for compatibility but should not be newly adopted."
+    }
+  },
+  "release_policy": {
+    "version_source": "VERSION",
+    "versioning_scheme": "semver-prerelease",
+    "tag_format": "v<version>",
+    "behavior_changes": "Record behavior-affecting changes in CHANGELOG.md.",
+    "recommended_pinning": "Consuming projects should pin a git tag or commit SHA.",
+    "stable_release_gate": "Stable releases require validation, changelog coverage, and review against at least one real consuming project without copying project-specific rules back into shared skills."
+  },
+  "validation": {
+    "command": "node scripts/validate-skills.mjs",
+    "checks": [
+      "VERSION matches manifest version",
+      "CHANGELOG contains the current VERSION heading",
+      "manifest skill entries are unique",
+      "manifest paths match skills/<scope>/<skill-name>",
+      "manifest scope matches skill path scope",
+      "manifest entrypoint is SKILL.md",
+      "each listed skill has SKILL.md",
+      "SKILL.md frontmatter contains name and description",
+      "frontmatter name matches manifest entry",
+      "frontmatter description matches manifest entry",
+      "all discovered skills are listed in the manifest"
+    ]
   },
   "skills": [
     {
       "name": "project-truth-source",
+      "scope": "common",
       "path": "skills/common/project-truth-source",
-      "stability": "draft"
-    },
-    {
-      "name": "laravel-migration-safety",
-      "path": "skills/common/laravel-migration-safety",
-      "stability": "draft"
-    },
-    {
-      "name": "laravel-api-contract",
-      "path": "skills/common/laravel-api-contract",
-      "stability": "draft"
-    },
-    {
-      "name": "laravel-test-review-sop",
-      "path": "skills/common/laravel-test-review-sop",
+      "entrypoint": "SKILL.md",
+      "description": "Use when a task depends on project specs, implementation behavior, tests, or docs that may disagree across files or sources.",
       "stability": "draft"
     },
     {
       "name": "ai-change-review-guardrails",
+      "scope": "common",
       "path": "skills/common/ai-change-review-guardrails",
+      "entrypoint": "SKILL.md",
+      "description": "Use before accepting AI-generated or large backend/API/scheduler/security changes, especially when hidden assumptions or blast radius matter.",
+      "stability": "draft"
+    },
+    {
+      "name": "test-review-sop",
+      "scope": "common",
+      "path": "skills/common/test-review-sop",
+      "entrypoint": "SKILL.md",
+      "description": "Use when adding, updating, reviewing, or deleting tests, especially for policy, state machine, API contract, auth, regression, or high-risk boundary coverage.",
+      "stability": "draft"
+    },
+    {
+      "name": "git-commit-workflow",
+      "scope": "common",
+      "path": "skills/common/git-commit-workflow",
+      "entrypoint": "SKILL.md",
+      "description": "Use when staging, splitting, reviewing, or creating commits in a dirty worktree, especially to avoid mixing unrelated changes or committing generated or local-only noise.",
+      "stability": "draft"
+    },
+    {
+      "name": "skill-maintenance-governance",
+      "scope": "common",
+      "path": "skills/common/skill-maintenance-governance",
+      "entrypoint": "SKILL.md",
+      "description": "Use when creating, updating, compressing, removing, or syncing shared or project skills, especially to prevent duplicated agent instructions, drift, or project-specific rules leaking into shared skills.",
+      "stability": "draft"
+    },
+    {
+      "name": "tenant-access-boundaries",
+      "scope": "common",
+      "path": "skills/common/tenant-access-boundaries",
+      "entrypoint": "SKILL.md",
+      "description": "Use when implementing or reviewing tenant, organization, team, account, workspace, or project-scoped access boundaries in backend services, APIs, jobs, or data queries.",
+      "stability": "draft"
+    },
+    {
+      "name": "scheduler-side-effect-guardrails",
+      "scope": "common",
+      "path": "skills/common/scheduler-side-effect-guardrails",
+      "entrypoint": "SKILL.md",
+      "description": "Use when creating, changing, or reviewing scheduled jobs, cron tasks, queues, expiration handlers, lifecycle transitions, notifications, or retryable batch operations.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-migration-safety",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-migration-safety",
+      "entrypoint": "SKILL.md",
+      "description": "Use when creating, changing, renaming, reviewing, or backfilling Laravel database migrations, especially when deployment status is unknown.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-api-contract",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-api-contract",
+      "entrypoint": "SKILL.md",
+      "description": "Use when adding or changing Laravel API endpoints, Form Requests, Resources, response wrappers, OpenAPI/Scramble docs, or client-facing response shapes.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-auth-authorization-flow",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-auth-authorization-flow",
+      "entrypoint": "SKILL.md",
+      "description": "Use when implementing or reviewing Laravel authentication and authorization flows, including Sanctum tokens, token abilities, middleware ordering, role or profile loading, login boundaries, and audit logging.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-route-authorization-matrix",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-route-authorization-matrix",
+      "entrypoint": "SKILL.md",
+      "description": "Use when adding, changing, or reviewing Laravel API routes, route groups, middleware chains, role access, throttle policies, or public versus protected endpoint boundaries.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-scramble-api-docs",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-scramble-api-docs",
+      "entrypoint": "SKILL.md",
+      "description": "Use when writing or reviewing Laravel Scramble API documentation, especially Resource or Form Request schemas, nested responses, required fields, nullability, response wrappers, or schema export verification.",
+      "stability": "draft"
+    },
+    {
+      "name": "laravel-security-testing",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-security-testing",
+      "entrypoint": "SKILL.md",
+      "description": "Use when planning or reviewing Laravel API security test coverage, including auth boundaries, route permission matrices, tenant isolation, token behavior, rate limits, sensitive data exposure, and OWASP baseline checks.",
       "stability": "draft"
     }
   ]
