@@ -185,6 +185,14 @@
       "entrypoint": "SKILL.md",
       "description": "Use when planning or reviewing Laravel API security test coverage, including auth boundaries, route permission matrices, tenant isolation, token behavior, rate limits, sensitive data exposure, and OWASP baseline checks.",
       "stability": "draft"
+    },
+    {
+      "name": "laravel-pdf-generation",
+      "scope": "laravel",
+      "path": "skills/laravel/laravel-pdf-generation",
+      "entrypoint": "SKILL.md",
+      "description": "Use when choosing a PDF generation approach in a Laravel project, adding a PDF export feature, or troubleshooting PDF font or rendering issues (especially CJK).",
+      "stability": "draft"
     }
   ]
 }

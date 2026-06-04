@@ -17,3 +17,7 @@
 - 明確規範 shared `SKILL.md` 的語言策略：frontmatter `name` 與 `description` 英文優先，正文中文優先。
 - 明確規範 commit message 使用 `[type] 摘要` 格式，摘要中文為主且不附加尾端括號註記。
 - 將 commit workflow 從專案 overlay 上收為 shared skill，加入提交前檢查清單與任務/文件/技能同步檢查。
+
+## [0.1.0-draft] - 2026-06-04
+
+- 新增 `laravel-pdf-generation` skill，涵蓋含 CJK 內容的 PDF 選型原則（Gotenberg + spatie/laravel-pdf）、mPDF 禁止條件、字型驗證防護規則，以及 PDF 部署檢查清單（`references/pdf-deployment-checklist.md`）。
