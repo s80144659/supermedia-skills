@@ -2,6 +2,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const root = process.cwd();
 const errors = [];
@@ -11,11 +12,16 @@ const manifestPath = path.join(root, 'skills.manifest.json');
 const versionPath = path.join(root, 'VERSION');
 const changelogPath = path.join(root, 'CHANGELOG.md');
 const skillsRoot = path.join(root, 'skills');
+const syncPluginAdaptersPath = path.join(root, 'scripts/sync-plugin-adapters.mjs');
 
 const hyphenCase = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-const skillPathPattern = /^skills\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const skillPathPattern = /^skills\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const allowedStability = new Set(['draft', 'stable', 'deprecated']);
 const allowedOptionalDirectories = new Set(['scripts', 'references', 'assets']);
+const actionSectionPattern =
+  /^## (作業流程|快速流程|審查流程|核心規則|審查面向|選型原則)$/m;
+const outputSectionPattern =
+  /^## (標準輸出|回覆檢查清單|檢查清單|品質檢查|契約檢查|Laravel 檢查清單|驗證)$/m;
 
 function addError(message) {
   errors.push(message);
@@ -122,31 +128,21 @@ function discoverSkillPaths() {
     return discovered;
   }
 
-  for (const scopeName of fs.readdirSync(skillsRoot).sort()) {
-    const scopePath = path.join(skillsRoot, scopeName);
+  for (const skillName of fs.readdirSync(skillsRoot).sort()) {
+    const skillDir = path.join(skillsRoot, skillName);
 
-    if (!isDirectory(scopePath)) {
+    if (!isDirectory(skillDir)) {
       continue;
     }
 
-    if (!hyphenCase.test(scopeName)) {
-      addError(`Skill scope must be lowercase hyphen-case: skills/${scopeName}`);
+    if (!hyphenCase.test(skillName)) {
+      addError(`Skill folder must be lowercase hyphen-case: skills/${skillName}`);
     }
 
-    for (const skillName of fs.readdirSync(scopePath).sort()) {
-      const skillDir = path.join(scopePath, skillName);
-
-      if (!isDirectory(skillDir)) {
-        continue;
-      }
-
-      if (!hyphenCase.test(skillName)) {
-        addError(`Skill folder must be lowercase hyphen-case: skills/${scopeName}/${skillName}`);
-      }
-
-      if (isFile(path.join(skillDir, 'SKILL.md'))) {
-        discovered.push(`skills/${scopeName}/${skillName}`);
-      }
+    if (isFile(path.join(skillDir, 'SKILL.md'))) {
+      discovered.push(`skills/${skillName}`);
+    } else {
+      addWarning(`Skill-like directory is missing SKILL.md and will not be discovered: skills/${skillName}`);
     }
   }
 
@@ -180,6 +176,7 @@ if (manifest) {
     'release_policy',
     'validation',
     'skills',
+    'distribution',
   ]) {
     if (!(key in manifest)) {
       addError(`skills.manifest.json is missing top-level field: ${key}`);
@@ -208,6 +205,7 @@ if (manifest) {
   requireObject(manifest.stability, 'stability');
   requireObject(manifest.release_policy, 'release_policy');
   requireObject(manifest.validation, 'validation');
+  requireObject(manifest.distribution, 'distribution');
 
   if (!Array.isArray(manifest.skills)) {
     addError('skills.manifest.json field "skills" must be an array.');
@@ -242,11 +240,17 @@ if (manifest) {
         names.add(name);
       }
 
+      if (!scope || typeof scope !== 'string') {
+        addError(`${label}.scope is required.`);
+      } else if (!hyphenCase.test(scope)) {
+        addError(`${label}.scope must be lowercase hyphen-case: ${scope}`);
+      }
+
       if (!skillPath || typeof skillPath !== 'string') {
         addError(`${label}.path is required.`);
       } else {
         if (!skillPathPattern.test(skillPath)) {
-          addError(`${label}.path must match skills/<scope>/<skill-name>: ${skillPath}`);
+          addError(`${label}.path must match skills/<skill-name>: ${skillPath}`);
         }
 
         if (paths.has(skillPath)) {
@@ -257,17 +261,6 @@ if (manifest) {
 
         if (name && path.basename(skillPath) !== name) {
           addError(`${label}.path basename must match name: ${skillPath} != ${name}`);
-        }
-
-        const pathParts = skillPath.split('/');
-        const pathScope = pathParts[1];
-
-        if (!scope || typeof scope !== 'string') {
-          addError(`${label}.scope is required.`);
-        } else if (!hyphenCase.test(scope)) {
-          addError(`${label}.scope must be lowercase hyphen-case: ${scope}`);
-        } else if (pathScope && scope !== pathScope) {
-          addError(`${label}.scope must match path scope: ${scope} != ${pathScope}`);
         }
 
         if (entrypoint !== 'SKILL.md') {
@@ -312,6 +305,18 @@ if (manifest) {
             if (!body.startsWith('# ')) {
               addWarning(`${skillPath}/SKILL.md body should start with an H1 heading.`);
             }
+
+            if (!actionSectionPattern.test(body)) {
+              addWarning(`${skillPath}/SKILL.md may be missing an explicit workflow or decision section.`);
+            }
+
+            if (!body.includes('\n## 停止條件')) {
+              addWarning(`${skillPath}/SKILL.md may be missing an explicit stop conditions section.`);
+            }
+
+            if (!outputSectionPattern.test(body)) {
+              addWarning(`${skillPath}/SKILL.md may be missing an output, checklist, or validation section.`);
+            }
           }
 
           for (const entry of fs.readdirSync(skillDir)) {
@@ -341,6 +346,135 @@ if (manifest) {
       }
     }
   }
+}
+
+function firstPluginByName(marketplace, pluginName) {
+  return Array.isArray(marketplace?.plugins)
+    ? marketplace.plugins.find((plugin) => plugin?.name === pluginName)
+    : undefined;
+}
+
+function validatePluginAdapters(manifest, version) {
+  if (!requireObject(manifest.distribution, 'distribution')) {
+    return;
+  }
+
+  const distribution = manifest.distribution;
+  const pluginName = distribution.plugin_name ?? manifest.name;
+  const marketplaceName = distribution.marketplace_name ?? 'supermedia';
+  const canonicalSkillRoot = distribution.canonical_skill_root ?? 'skills';
+  const codexManifestPath = distribution.codex?.manifest_path ?? '.codex-plugin/plugin.json';
+  const claudeManifestPath = distribution.claude?.manifest_path ?? '.claude-plugin/plugin.json';
+  const codexMarketplacePath =
+    distribution.codex?.marketplace_path ?? '.agents/plugins/marketplace.json';
+  const claudeMarketplacePath =
+    distribution.claude?.marketplace_path ?? '.claude-plugin/marketplace.json';
+  const codexSourcePath = distribution.codex?.source_path ?? './';
+  const claudeSource = distribution.claude?.source ?? './';
+
+  if (distribution.adapter_mode !== 'repo-root-plugin') {
+    addError('distribution.adapter_mode must be repo-root-plugin.');
+  }
+
+  if (canonicalSkillRoot !== 'skills') {
+    addError('distribution.canonical_skill_root must be skills.');
+  }
+
+  if (codexSourcePath !== './') {
+    addError('distribution.codex.source_path must be ./ so Codex uses the repository root plugin.');
+  }
+
+  if (claudeSource !== './') {
+    addError('distribution.claude.source must be ./ so Claude uses the repository root plugin.');
+  }
+
+  const codexManifest = readJson(path.join(root, codexManifestPath));
+  const claudeManifest = readJson(path.join(root, claudeManifestPath));
+  const codexMarketplace = readJson(path.join(root, codexMarketplacePath));
+  const claudeMarketplace = readJson(path.join(root, claudeMarketplacePath));
+
+  if (codexManifest) {
+    if (codexManifest.name !== pluginName) {
+      addError(`${codexManifestPath}.name must be ${pluginName}.`);
+    }
+
+    if (codexManifest.version !== version) {
+      addError(`${codexManifestPath}.version must match VERSION.`);
+    }
+
+    if (codexManifest.skills !== './skills/') {
+      addError(`${codexManifestPath}.skills must be ./skills/.`);
+    }
+  }
+
+  if (claudeManifest) {
+    if (claudeManifest.name !== pluginName) {
+      addError(`${claudeManifestPath}.name must be ${pluginName}.`);
+    }
+
+    if (claudeManifest.version !== version) {
+      addError(`${claudeManifestPath}.version must match VERSION.`);
+    }
+  }
+
+  if (codexMarketplace) {
+    if (codexMarketplace.name !== marketplaceName) {
+      addError(`${codexMarketplacePath}.name must be ${marketplaceName}.`);
+    }
+
+    const codexPlugin = firstPluginByName(codexMarketplace, pluginName);
+
+    if (!codexPlugin) {
+      addError(`${codexMarketplacePath} must include plugin ${pluginName}.`);
+    } else {
+      if (codexPlugin.source?.source !== 'local') {
+        addError(`${codexMarketplacePath} plugin source.source must be local.`);
+      }
+
+      if (codexPlugin.source?.path !== codexSourcePath) {
+        addError(`${codexMarketplacePath} plugin source.path must be ${codexSourcePath}.`);
+      }
+    }
+  }
+
+  if (claudeMarketplace) {
+    if (claudeMarketplace.name !== marketplaceName) {
+      addError(`${claudeMarketplacePath}.name must be ${marketplaceName}.`);
+    }
+
+    const claudePlugin = firstPluginByName(claudeMarketplace, pluginName);
+
+    if (!claudePlugin) {
+      addError(`${claudeMarketplacePath} must include plugin ${pluginName}.`);
+    } else if (claudePlugin.source !== claudeSource) {
+      addError(`${claudeMarketplacePath} plugin source must be ${claudeSource}.`);
+    }
+  }
+}
+
+if (manifest) {
+  validatePluginAdapters(manifest, version);
+}
+
+if (isFile(syncPluginAdaptersPath)) {
+  const result = spawnSync(process.execPath, [syncPluginAdaptersPath, '--check'], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+
+  if (result.status !== 0) {
+    addError(
+      [
+        'Plugin adapter check failed.',
+        result.stdout.trim(),
+        result.stderr.trim(),
+      ]
+        .filter(Boolean)
+        .join('\n'),
+    );
+  }
+} else {
+  addError('Missing sync script: scripts/sync-plugin-adapters.mjs');
 }
 
 for (const warning of warnings) {

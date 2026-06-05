@@ -8,23 +8,24 @@
     "repository_type": "pure_skill_repository",
     "repository_url": null,
     "skill_root": "skills",
-    "skill_path_format": "skills/<scope>/<skill-name>",
+    "skill_path_format": "skills/<skill-name>",
     "documentation_language": "Chinese governance documents and SKILL.md bodies with English-first skill metadata.",
     "metadata_policy": "SKILL.md frontmatter name and description should be English-first for cross-agent discovery; SKILL.md bodies should use Chinese except for necessary technical terms, tool names, code, commands, and field names.",
-    "scope_policy": "common is for framework-agnostic shared engineering workflows; framework-specific shared skills should use a technology scope such as laravel."
+    "scope_policy": "Skill folders are flat for plugin compatibility. The manifest scope field records whether a skill is framework-agnostic common guidance or framework-specific guidance such as laravel."
   },
   "consumer_policy": {
     "pinning_required": true,
     "pinning": "Projects should pin this repository by git tag or commit SHA before loading shared skills.",
     "project_specific_rules": "Domain rules belong in the consuming project, not in this shared repository.",
-    "local_override_policy": "Consuming projects should not edit shared skills locally. Project-specific instructions should live beside the consuming project and reference the pinned shared skills source.",
+    "local_override_policy": "Consuming projects should not edit shared skills locally. Project-specific instructions should live beside the consuming project and reference the pinned shared skills source or private plugin marketplace.",
     "conflict_resolution": "Project runtime constraints can override shared guidance for that project, but shared skill behavior should be changed in this repository rather than forked silently.",
     "upgrade_review": "Shared skill upgrades should be reviewed against at least one real project before broad rollout.",
     "consumer_project_template": "templates/consuming-project-AGENTS.md",
     "supported_integration_methods": [
+      "private-plugin-marketplace",
+      "agent-skill-path",
       "git-submodule",
-      "vendored-copy",
-      "agent-skill-path"
+      "vendored-copy"
     ]
   },
   "skill_format": {
@@ -41,8 +42,8 @@
       "assets"
     ],
     "naming": {
-      "scope": "lowercase hyphen-case",
-      "skill": "lowercase hyphen-case"
+      "scope": "manifest metadata, lowercase hyphen-case",
+      "skill": "flat lowercase hyphen-case folder under skills/"
     }
   },
   "stability": {
@@ -71,21 +72,25 @@
       "VERSION matches manifest version",
       "CHANGELOG contains the current VERSION heading",
       "manifest skill entries are unique",
-      "manifest paths match skills/<scope>/<skill-name>",
-      "manifest scope matches skill path scope",
+      "manifest paths match skills/<skill-name>",
+      "manifest scope is required metadata independent of the flat skill path",
       "manifest entrypoint is SKILL.md",
       "each listed skill has SKILL.md",
       "SKILL.md frontmatter contains name and description",
       "frontmatter name matches manifest entry",
       "frontmatter description matches manifest entry",
-      "all discovered skills are listed in the manifest"
+      "all discovered skills are listed in the manifest",
+      "warns when a skill-like directory is missing SKILL.md",
+      "warns when SKILL.md may be missing workflow, stop condition, output, checklist, or validation signals",
+      "generated Codex/Claude plugin adapters match the manifest",
+      "generated adapters use repository root as plugin root and skills/ as the only skill source"
     ]
   },
   "skills": [
     {
       "name": "project-truth-source",
       "scope": "common",
-      "path": "skills/common/project-truth-source",
+      "path": "skills/project-truth-source",
       "entrypoint": "SKILL.md",
       "description": "Use when a task depends on project specs, implementation behavior, tests, or docs that may disagree across files or sources.",
       "stability": "draft"
@@ -93,7 +98,7 @@
     {
       "name": "ai-change-review-guardrails",
       "scope": "common",
-      "path": "skills/common/ai-change-review-guardrails",
+      "path": "skills/ai-change-review-guardrails",
       "entrypoint": "SKILL.md",
       "description": "Use before accepting AI-generated or large backend/API/scheduler/security changes, especially when hidden assumptions or blast radius matter.",
       "stability": "draft"
@@ -101,7 +106,7 @@
     {
       "name": "test-review-sop",
       "scope": "common",
-      "path": "skills/common/test-review-sop",
+      "path": "skills/test-review-sop",
       "entrypoint": "SKILL.md",
       "description": "Use when adding, updating, reviewing, or deleting tests, especially for policy, state machine, API contract, auth, regression, or high-risk boundary coverage.",
       "stability": "draft"
@@ -109,7 +114,7 @@
     {
       "name": "git-commit-workflow",
       "scope": "common",
-      "path": "skills/common/git-commit-workflow",
+      "path": "skills/git-commit-workflow",
       "entrypoint": "SKILL.md",
       "description": "Use when staging, splitting, reviewing, or creating commits in a dirty worktree, especially to avoid mixing unrelated changes or committing generated or local-only noise.",
       "stability": "draft"
@@ -117,7 +122,7 @@
     {
       "name": "skill-maintenance-governance",
       "scope": "common",
-      "path": "skills/common/skill-maintenance-governance",
+      "path": "skills/skill-maintenance-governance",
       "entrypoint": "SKILL.md",
       "description": "Use when creating, updating, compressing, removing, or syncing shared or project skills, especially to prevent duplicated agent instructions, drift, or project-specific rules leaking into shared skills.",
       "stability": "draft"
@@ -125,7 +130,7 @@
     {
       "name": "tenant-access-boundaries",
       "scope": "common",
-      "path": "skills/common/tenant-access-boundaries",
+      "path": "skills/tenant-access-boundaries",
       "entrypoint": "SKILL.md",
       "description": "Use when implementing or reviewing tenant, organization, team, account, workspace, or project-scoped access boundaries in backend services, APIs, jobs, or data queries.",
       "stability": "draft"
@@ -133,7 +138,7 @@
     {
       "name": "scheduler-side-effect-guardrails",
       "scope": "common",
-      "path": "skills/common/scheduler-side-effect-guardrails",
+      "path": "skills/scheduler-side-effect-guardrails",
       "entrypoint": "SKILL.md",
       "description": "Use when creating, changing, or reviewing scheduled jobs, cron tasks, queues, expiration handlers, lifecycle transitions, notifications, or retryable batch operations.",
       "stability": "draft"
@@ -141,7 +146,7 @@
     {
       "name": "laravel-migration-safety",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-migration-safety",
+      "path": "skills/laravel-migration-safety",
       "entrypoint": "SKILL.md",
       "description": "Use when creating, changing, renaming, reviewing, or backfilling Laravel database migrations, especially when deployment status is unknown.",
       "stability": "draft"
@@ -149,7 +154,7 @@
     {
       "name": "laravel-api-contract",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-api-contract",
+      "path": "skills/laravel-api-contract",
       "entrypoint": "SKILL.md",
       "description": "Use when adding or changing Laravel API endpoints, Form Requests, Resources, response wrappers, OpenAPI/Scramble docs, or client-facing response shapes.",
       "stability": "draft"
@@ -157,7 +162,7 @@
     {
       "name": "laravel-auth-authorization-flow",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-auth-authorization-flow",
+      "path": "skills/laravel-auth-authorization-flow",
       "entrypoint": "SKILL.md",
       "description": "Use when implementing or reviewing Laravel authentication and authorization flows, including Sanctum tokens, token abilities, middleware ordering, role or profile loading, login boundaries, and audit logging.",
       "stability": "draft"
@@ -165,7 +170,7 @@
     {
       "name": "laravel-route-authorization-matrix",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-route-authorization-matrix",
+      "path": "skills/laravel-route-authorization-matrix",
       "entrypoint": "SKILL.md",
       "description": "Use when adding, changing, or reviewing Laravel API routes, route groups, middleware chains, role access, throttle policies, or public versus protected endpoint boundaries.",
       "stability": "draft"
@@ -173,7 +178,7 @@
     {
       "name": "laravel-scramble-api-docs",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-scramble-api-docs",
+      "path": "skills/laravel-scramble-api-docs",
       "entrypoint": "SKILL.md",
       "description": "Use when writing or reviewing Laravel Scramble API documentation, especially Resource or Form Request schemas, nested responses, required fields, nullability, response wrappers, or schema export verification.",
       "stability": "draft"
@@ -181,7 +186,7 @@
     {
       "name": "laravel-security-testing",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-security-testing",
+      "path": "skills/laravel-security-testing",
       "entrypoint": "SKILL.md",
       "description": "Use when planning or reviewing Laravel API security test coverage, including auth boundaries, route permission matrices, tenant isolation, token behavior, rate limits, sensitive data exposure, and OWASP baseline checks.",
       "stability": "draft"
@@ -189,10 +194,34 @@
     {
       "name": "laravel-pdf-generation",
       "scope": "laravel",
-      "path": "skills/laravel/laravel-pdf-generation",
+      "path": "skills/laravel-pdf-generation",
       "entrypoint": "SKILL.md",
       "description": "Use when choosing a PDF generation approach in a Laravel project, adding a PDF export feature, or troubleshooting PDF font or rendering issues (especially CJK).",
       "stability": "draft"
     }
-  ]
+  ],
+  "distribution": {
+    "plugin_name": "supermedia-skills",
+    "display_name": "Supermedia Skills",
+    "description": "Shared Supermedia engineering skills for reusable software delivery workflows.",
+    "author": {
+      "name": "Supermedia Engineering"
+    },
+    "license": "Proprietary",
+    "category": "Productivity",
+    "marketplace_name": "supermedia",
+    "marketplace_display_name": "Supermedia",
+    "canonical_skill_root": "skills",
+    "adapter_mode": "repo-root-plugin",
+    "codex": {
+      "marketplace_path": ".agents/plugins/marketplace.json",
+      "manifest_path": ".codex-plugin/plugin.json",
+      "source_path": "./"
+    },
+    "claude": {
+      "marketplace_path": ".claude-plugin/marketplace.json",
+      "manifest_path": ".claude-plugin/plugin.json",
+      "source": "./"
+    }
+  }
 }

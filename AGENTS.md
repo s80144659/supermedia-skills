@@ -15,10 +15,11 @@
 - `SKILL.md` frontmatter 的 `name` 與 `description` 使用英文優先。
 - `description` 必須描述 skill 做什麼，以及何時使用。
 - 除必要技術名詞、工具名、程式碼、指令與欄位名稱外，`SKILL.md` 正文使用中文。
-- `skills/common` 僅放跨框架共通工程流程；Laravel 等技術棧限定 skill 使用對應 scope。
+- `skills/` 採 flat 目錄；跨框架或 Laravel 等技術棧分類使用 `skills.manifest.json` 的 `scope` 欄位。
 - 保持 `SKILL.md` 精要；長篇資料放入 `references/`。
 - 只有在能提升可靠性、清楚度或操作價值時，才新增 `scripts/`、`references/` 或 `assets/`。
 - 新增、刪除或移動 skill 時，同步更新 `skills.manifest.json`。
+- 變更 canonical skills 或 manifest 後，執行 `node scripts/sync-plugin-adapters.mjs` 重新產生 Codex / Claude adapter manifests；不要新增 `dist/` skill copy。
 - 會影響 agent 行為的變更，必須更新 `CHANGELOG.md`。
 - 新增、刪除、移動、重新命名 skill 或調整 stability，也必須更新 `CHANGELOG.md`。
 - Commit message 使用 `[type] 摘要` 格式，摘要以中文為主，不在尾端附加額外括號註記。
@@ -29,10 +30,11 @@
 完成變更後執行：
 
 ```bash
+node scripts/sync-plugin-adapters.mjs
 node scripts/validate-skills.mjs
 ```
 
-若 validation 失敗，先修正 repository 結構、frontmatter、manifest 或 version mismatch，再交付結果。
+若 validation 失敗，先修正 repository 結構、frontmatter、manifest、adapter manifests 或 version mismatch，再交付結果。
 
 ## Review Focus
 
@@ -43,7 +45,7 @@ node scripts/validate-skills.mjs
 - stop conditions 是否能防止錯誤行為
 - optional resources 是否符合 progressive disclosure
 - skill 是否仍保持專案中立
-- manifest、VERSION、CHANGELOG 是否同步
+- manifest、VERSION、CHANGELOG、canonical skills 與 tool adapters 是否同步
 
 ## Output Expectations
 

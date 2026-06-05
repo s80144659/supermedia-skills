@@ -1,0 +1,34 @@
+{
+  "name": "supermedia-skills",
+  "version": "0.1.0-draft",
+  "description": "Shared Supermedia engineering skills for reusable software delivery workflows.",
+  "author": {
+    "name": "Supermedia Engineering"
+  },
+  "license": "Proprietary",
+  "keywords": [
+    "skills",
+    "engineering",
+    "software-delivery",
+    "supermedia"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Supermedia Skills",
+    "shortDescription": "Shared Supermedia engineering skills for reusable software delivery workflows.",
+    "longDescription": "Shared Supermedia engineering workflows packaged as reusable Agent Skills for Codex.",
+    "developerName": "Supermedia Engineering",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Review",
+      "Implementation"
+    ],
+    "defaultPrompt": [
+      "Use Supermedia shared skills for this task.",
+      "Review this change with the shared guardrails.",
+      "Apply the relevant Laravel shared workflow."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

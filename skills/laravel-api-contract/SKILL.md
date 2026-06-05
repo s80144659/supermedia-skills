@@ -7,6 +7,16 @@ description: Use when adding or changing Laravel API endpoints, Form Requests, R
 
 API 行為是後端、客戶端、測試與產生文件之間的契約。四者必須保持一致。
 
+## 搭配規則
+
+- 本技能是新增或修改 API 端點時的 primary skill。
+- 只載入與本次實際變更面相關的搭配 skill，不要因搭配規則遞迴載入整個 catalog。
+- 若同時改認證方式、token ability、guard、role loading 或 401/403 語意，搭配 `laravel-auth-authorization-flow`。
+- 若同時改路由、中介層、角色或公開/受保護狀態，搭配 `laravel-route-authorization-matrix`。
+- 若端點涉及租戶、組織、帳戶、工作區或專案邊界，搭配 `tenant-access-boundaries`。
+- 若目標是測試或審查安全覆蓋，搭配 `laravel-security-testing`。
+- 只有在 Scramble 推導或匯出結果需要調整時，才額外載入 `laravel-scramble-api-docs`。
+
 ## 作業流程
 
 1. 找出既有端點風格：路由檔案、控制器模式、Form Request、Resource、回應包裝、錯誤格式。

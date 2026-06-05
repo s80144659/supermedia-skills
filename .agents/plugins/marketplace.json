@@ -1,0 +1,20 @@
+{
+  "name": "supermedia",
+  "interface": {
+    "displayName": "Supermedia"
+  },
+  "plugins": [
+    {
+      "name": "supermedia-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

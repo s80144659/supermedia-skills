@@ -17,6 +17,14 @@ description: Use when implementing or reviewing Laravel authentication and autho
 6. 對敏感跨角色或特權操作做稽核，但不記錄機密或完整權杖。
 7. 為未認證、已認證但角色錯誤、已認證且角色正確、停用/停權身分，以及過期/格式錯誤權杖情境加入測試。
 
+## 授權決策
+
+- 未經 guard、token、session、membership 或 policy 驗證的 role、tenant、ability，一律視為不可信。
+- 平台層角色與租戶範圍角色分開判斷；不要用其中一個隱含另一個。
+- Token ability 只能證明權杖被授予能力，不能取代目前使用者、租戶、資源歸屬與生命週期狀態檢查。
+- 管理員或支援覆寫必須走明確 policy/gate/服務分支，並保留稽核與測試。
+- 無法判斷 401 或 403 時，先回到專案既有錯誤契約；若契約衝突，停止確認。
+
 ## Laravel 檢查清單
 
 - 受保護路由使用預期的中介層鏈與順序。

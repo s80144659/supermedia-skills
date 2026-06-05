@@ -11,13 +11,14 @@ Skill 內容應可被 coding agents 發現、載入、執行與驗證。每次�
 ## 新增 Skill 流程
 
 1. 確認需求屬於 shared skill，而不是單一專案規則。
-2. 在 `skills/<scope>/<skill-name>/` 建立自包含目錄。
+2. 在 `skills/<skill-name>/` 建立自包含目錄，並在 `skills.manifest.json` 設定 `scope`。
 3. 建立 `SKILL.md`，並加入英文優先的 frontmatter。
 4. 讓 `description` 同時說明 skill 做什麼，以及何時應使用。
 5. 只在必要時加入 `scripts/`、`references/` 或 `assets/`。
 6. 將新 skill 加入 `skills.manifest.json`，並設定 `stability`。
-7. 執行 validation script。
-8. 更新 `CHANGELOG.md`。
+7. 執行 `node scripts/sync-plugin-adapters.mjs`，從 manifest 重新產生 Codex / Claude adapter manifests。
+8. 執行 validation script。
+9. 更新 `CHANGELOG.md`。
 
 ## 修改 Skill 流程
 
@@ -25,7 +26,8 @@ Skill 內容應可被 coding agents 發現、載入、執行與驗證。每次�
 2. 判斷修改是清楚度改善、觸發條件調整、workflow 改動、驗證要求改動，或相容性修正。
 3. 保持 `SKILL.md` 精要，將長篇背景、政策、表格與非必要常駐資料移到 `references/`。
 4. 若修改會影響 agent 的決策、停止條件、輸出格式或驗證要求，更新 `CHANGELOG.md`。
-5. 執行 validation script。
+5. 若修改會影響 plugin metadata，執行 `node scripts/sync-plugin-adapters.mjs`，讓 Codex / Claude adapter files 從同一份 manifest 重新產生。
+6. 執行 validation script。
 
 ## SKILL.md 要求
 
@@ -62,7 +64,7 @@ Optional resources 必須能直接提升 skill 的可靠性、清楚度或操作
 審查新增或修改時，至少確認以下項目：
 
 - 是否屬於 shared repository 範圍
-- skill name 與 folder name 是否使用英文 hyphen-case
+- skill name 與 flat folder name 是否使用英文 hyphen-case
 - frontmatter 是否完整且英文優先
 - description 是否能支援跨 agent 觸發
 - `SKILL.md` 正文是否遵守中文優先，且僅保留必要技術名詞
@@ -77,10 +79,17 @@ Optional resources 必須能直接提升 skill 的可靠性、清楚度或操作
 在提交前執行：
 
 ```bash
+node scripts/sync-plugin-adapters.mjs
 node scripts/validate-skills.mjs
 ```
 
-Validation 通過只代表 repository 結構與 metadata 一致。Reviewer 仍需審查 skill 的實際行為品質與跨專案適用性。
+Validation 通過代表 repository 結構、metadata、canonical skills 與 Codex / Claude plugin adapters 一致。Reviewer 仍需審查 skill 的實際行為品質與跨專案適用性。
+
+若只想檢查已產生的 adapter files 是否同步，可執行：
+
+```bash
+node scripts/sync-plugin-adapters.mjs --check
+```
 
 ## Commit Message
 
@@ -105,5 +114,16 @@ Release 前檢查：
 1. 更新 `VERSION`。
 2. 同步 `skills.manifest.json.version`。
 3. 更新 `CHANGELOG.md` 對應版本段落。
-4. 執行 `node scripts/validate-skills.mjs`。
-5. 建立符合 `v<version>` 格式的 tag。
+4. 執行 `node scripts/sync-plugin-adapters.mjs`。
+5. 執行 `node scripts/validate-skills.mjs`。
+6. 建立符合 `v<version>` 格式的 tag。
+
+## Private Marketplace Release
+
+本 repository 可作為 private plugin marketplace。Marketplace 檔案只是一份 plugin catalog，不代表公開發布。
+
+對 Codex，private marketplace 使用 `.agents/plugins/marketplace.json`，plugin root 是 repository root。
+
+對 Claude，private marketplace 使用 `.claude-plugin/marketplace.json`，plugin root 同樣是 repository root。
+
+Consuming projects 應 pin git tag 或 commit SHA。同事是否能安裝取決於 private git repository 的存取權限與本機 git credentials。

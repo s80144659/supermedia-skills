@@ -7,6 +7,15 @@ description: Use when planning or reviewing Laravel API security test coverage, 
 
 安全測試應保護最容易默默失效的邊界：存取控制、租戶隔離、權杖語意與敏感資料處理。
 
+## 搭配規則
+
+- 本技能是 security testing overlay，不取代 API、route、auth 或 tenant skill 的契約定義。
+- 只載入與本次實際變更面相關的搭配 skill，不要因搭配規則遞迴載入整個 catalog。
+- 若測試目標是新 API，先確認 `laravel-api-contract` 的請求、回應與錯誤形狀。
+- 若測試目標是 token、guard、session、role loading、ability 或 401/403 語意，搭配 `laravel-auth-authorization-flow`。
+- 若測試目標是 route access，搭配 `laravel-route-authorization-matrix`。
+- 若測試目標是租戶隔離，搭配 `tenant-access-boundaries`。
+
 ## 作業流程
 
 1. 識別受保護資產：帳號、租戶資料、管理操作、檔案、權杖、金額、匯出資料與個人資料。
@@ -16,6 +25,16 @@ description: Use when planning or reviewing Laravel API security test coverage, 
 5. 測試權杖行為：過期、撤銷、能力錯誤、防護錯誤、租戶錯誤與格式錯誤。
 6. 測試驗證邏輯，以及回應與日誌中的敏感資料暴露。
 7. 先執行聚焦的功能測試，再視需要擴大到更完整的安全測試組合。
+
+## Baseline 範圍
+
+此處的 OWASP baseline 指最小 API 安全覆蓋，不是完整 ASVS 或滲透測試：
+
+- 物件層與功能層授權。
+- 認證失敗、權杖過期、撤銷與能力錯誤。
+- 租戶隔離與資源歸屬。
+- 過量資料暴露與敏感欄位洩漏。
+- 輸入驗證、速率限制與安全設定漂移。
 
 ## Laravel 檢查清單
 

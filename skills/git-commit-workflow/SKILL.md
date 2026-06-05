@@ -17,7 +17,7 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 4. 若同一檔案包含多個變更，只暫存屬於目前提交的變更區塊。
 5. 提交前用 `git diff --staged` 重新檢查已暫存內容。
 6. 檢查相關文件、技能或任務來源是否因規格或實作變更而漂移。
-7. 可連到任務系統或 Notion MCP 時，檢查是否有對應任務編號或任務脈絡。
+7. 可連到任務系統、知識庫或 issue tracker 時，檢查是否有對應任務編號或任務脈絡。
 8. 執行能證明已暫存行為的最小驗證；若無法驗證，說明原因。
 9. 提交訊息使用統一格式：`[type] 摘要`。
 
@@ -33,6 +33,13 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 - 不在提交主旨尾端附加 skill 名稱、流程分類或其他括號註記，除非使用者明確指定。
 - 複雜提交可在主旨後補充 why / what / impact；簡單提交維持單行。
 
+## 回覆檢查清單
+
+- 說明提交包含的主題與刻意排除的變更。
+- 回報實際 commit message。
+- 回報已執行或無法執行的驗證。
+- 若工作樹仍有未提交內容，說明它們是否與本次提交無關。
+
 ## 停止條件
 
 遇到以下情況，繼續前應停止並詢問：
@@ -41,6 +48,6 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 - 工作樹含有無法安全分離的無關變更。
 - 需要執行破壞性 Git 操作。
 - 資料庫遷移、產生物或第三方 vendor 檔案的歸屬不清楚。
-- 相關文件、技能、任務或 Notion 歸屬不清。
+- 相關文件、技能、任務或 issue 歸屬不清。
 - commit message type 無法判斷。
 - migration 時序與部署或回復路徑可能衝突。

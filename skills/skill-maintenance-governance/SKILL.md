@@ -22,10 +22,14 @@ description: Use when creating, updating, compressing, removing, or syncing shar
 2. 建立新技能前先搜尋既有技能。
 3. 前置中繼資料的 `name` 與 `description` 保持英文優先且以觸發條件為導向。
 4. 除必要技術名詞、工具名、程式碼、指令與欄位名稱外，`SKILL.md` 正文使用中文。
-5. 共通指引移入共享技能後，從專案文件移除重複內容。
+5. 共通指引移入共享技能後，只在確認 consuming project 已引用 pinned shared skill，且該段落不是 project-specific override 時，才移除專案文件中的重複內容。
 6. 專案專屬命令、容器名稱、業務角色與環境限制留在引用專案。
 7. 新增、移動、重新命名或刪除技能時，同步更新技能清單、變更紀錄與驗證期待。
 8. 執行儲存庫的技能驗證指令。
+
+## 引用證據
+
+可接受的 pinned shared skill 證據包含 git submodule SHA、vendored `VERSION`/manifest、project `AGENTS.md` pinned ref、或 agent skill path 設定。
 
 ## 品質檢查
 

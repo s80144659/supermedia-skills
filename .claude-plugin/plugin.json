@@ -1,0 +1,9 @@
+{
+  "name": "supermedia-skills",
+  "description": "Shared Supermedia engineering skills for reusable software delivery workflows.",
+  "version": "0.1.0-draft",
+  "author": {
+    "name": "Supermedia Engineering"
+  },
+  "license": "Proprietary"
+}

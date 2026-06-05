@@ -1,0 +1,22 @@
+{
+  "name": "supermedia",
+  "owner": {
+    "name": "Supermedia Engineering"
+  },
+  "description": "Private Supermedia plugin marketplace.",
+  "metadata": {
+    "description": "Private Supermedia plugin marketplace."
+  },
+  "version": "0.1.0-draft",
+  "plugins": [
+    {
+      "name": "supermedia-skills",
+      "source": "./",
+      "description": "Shared Supermedia engineering skills for reusable software delivery workflows.",
+      "version": "0.1.0-draft",
+      "author": {
+        "name": "Supermedia Engineering"
+      }
+    }
+  ]
+}
