@@ -1,26 +1,106 @@
 # Supermedia Skills
 
-Supermedia 開發者與 AI coding agents 共用的工程 skills repository。
+Supermedia 開發者與 AI coding agents 共用的 shared engineering skills。
 
-## 目的
+這個 repository 把可重複使用的開發流程包成 Codex / Claude 可安裝的 private plugin marketplace。目標是讓不同專案共用同一份工程慣例，而不是在每個專案複製一份 skill 內文。
 
-本 repository 集中維護可重複使用的 skills，支援軟體交付流程中的規劃、實作、審查、測試、發布與維護。
+## 功能
 
-本 repository 用於共享作業指引，不承載特定專案的業務規則。
+- 提供跨專案共用的 AI coding workflows。
+- 支援 Codex plugin marketplace。
+- 支援 Claude Code plugin marketplace。
+- 只維護一份 canonical skill 內文：`skills/<skill-name>/SKILL.md`。
+- 用 generated adapter files 承接 Codex / Claude 的包裝差異。
+- 提供 validator，避免 skill catalog、版本號、frontmatter 與 plugin adapter 漂移。
 
-本 repository 不是 agent persona catalog；skills 應是 task-specific、可載入、可執行、可維護的工作包。
+## Included Skills
 
-## 相容性
+| Skill | Scope | 用途 |
+| --- | --- | --- |
+| `project-truth-source` | common | 規格、實作、測試、文件互相衝突時，用來判斷真相來源。 |
+| `ai-change-review-guardrails` | common | 審查 AI 生成或大範圍修改的風險、假設與 blast radius。 |
+| `test-review-sop` | common | 新增、修改、刪除或審查測試時使用。 |
+| `git-commit-workflow` | common | 暫存、拆分、檢查與建立 commit。 |
+| `skill-maintenance-governance` | common | 維護 shared / project skills，避免重複與漂移。 |
+| `tenant-access-boundaries` | common | 實作或審查 tenant / organization / workspace 存取邊界。 |
+| `scheduler-side-effect-guardrails` | common | 審查排程、queue、過期處理、通知與批次副作用。 |
+| `laravel-migration-safety` | laravel | Laravel migration、backfill、改欄位與部署安全。 |
+| `laravel-api-contract` | laravel | Laravel API request / response / Resource / Scramble 契約。 |
+| `laravel-auth-authorization-flow` | laravel | Laravel auth、Sanctum、middleware、role、token abilities。 |
+| `laravel-route-authorization-matrix` | laravel | Laravel route group、middleware chain、role access matrix。 |
+| `laravel-scramble-api-docs` | laravel | Laravel Scramble API schema 與文件輸出。 |
+| `laravel-security-testing` | laravel | Laravel API 安全測試、權限矩陣、租戶隔離、敏感資料。 |
+| `laravel-pdf-generation` | laravel | Laravel PDF 產生方案與 CJK 字型 / rendering 風險。 |
 
-Skills 應盡可能維持可被 Codex、Claude 與相容 agent workflows 讀取與使用。
+## 安裝
 
-每個 skill 應保持可移植、精要，並避免依賴單一 consuming project；必要依賴必須明確揭露。
+### Codex
+
+先把 marketplace 加到 Codex，並 pin 到 release tag：
+
+```bash
+codex plugin marketplace add https://github.com/s80144659/supermedia-skills.git --ref v0.1.0
+codex plugin add supermedia-skills@supermedia
+```
+
+檢查：
+
+```bash
+codex plugin marketplace list
+codex plugin list
+```
+
+更新 marketplace snapshot：
+
+```bash
+codex plugin marketplace upgrade supermedia
+```
+
+### Claude Code
+
+在 Claude Code 互動模式內：
+
+```text
+/plugin marketplace add https://github.com/s80144659/supermedia-skills.git#v0.1.0
+/plugin install supermedia-skills@supermedia
+/reload-plugins
+```
+
+或用 shell CLI：
+
+```bash
+claude plugin marketplace add https://github.com/s80144659/supermedia-skills.git#v0.1.0
+claude plugin install supermedia-skills@supermedia --scope project
+```
+
+`--scope project` 會把安裝宣告寫入專案設定，方便團隊共用。只給自己使用時可用 `--scope user` 或省略。
+
+## 在專案中引用
+
+Consuming project 只保留 project-specific instructions，例如業務規則、環境命令、部署限制與專案 overlay。共通工程行為回到本 repository 維護。
+
+建議在 consuming project 的 `AGENTS.md` 或 `CLAUDE.md` 記錄：
+
+```md
+## Shared Skills Contract
+
+- Marketplace source: https://github.com/s80144659/supermedia-skills.git
+- Marketplace name: supermedia
+- Plugin name: supermedia-skills
+- Integration method: private-plugin-marketplace
+- Pinned ref: v0.1.0
+
+Do not edit shared skills locally in this project. Update shared behavior in
+supermedia-skills, release a new tag, then intentionally upgrade this project.
+```
+
+可使用 `templates/consuming-project-AGENTS.md` 作為最小範本。
 
 ## Repository 結構
 
 本 repository root 本身就是 private plugin root，沒有 `dist/` skill copy。
 
-Canonical skill source:
+Canonical source:
 
 - `skills/<skill-name>/SKILL.md`
 - 選用的 `skills/<skill-name>/references/`、`scripts/`、`assets/`
@@ -35,88 +115,60 @@ Generated adapter files:
 
 `skills/` 是唯一可手動維護的 skill 內文來源。Codex / Claude 差異只放在 `skills.manifest.json` 的 `distribution` 區塊，再由 `node scripts/sync-plugin-adapters.mjs` 產生 adapter files。
 
-所有 canonical skills 使用 flat 目錄：`skills/<skill-name>`。跨框架或技術棧限定的分類不靠資料夾分層，而是記錄在 `skills.manifest.json` 的 `scope` 欄位，例如 `common` 或 `laravel`。
-
 不要手動修改 generated adapter files；改 `skills/` 或 `skills.manifest.json` 後重新執行同步腳本。
 
-## 治理
+## 維護流程
 
-共享 skills 必須維持專案中立、精要、可審查，並可跨團隊重複使用。
-
-特定專案規則應放在 consuming projects 中，不應放入本 repository。
-
-Skill 變更應針對清楚度、觸發條件準確性、操作安全性，以及與支援 agents 的相容性進行審查。
-
-會改變 agent 行為的變更，必須在廣泛採用前完成紀錄。
-
-## Skill 品質
-
-每個 skill 應定義清楚目的、精準觸發條件、必要 workflow、預期輸出與驗證要求。
-
-Skill 內容應避免不必要背景、重複文件，以及會降低 agent 可預測性的寬泛指令。
-
-非必要常駐的長篇參考資料、可重複使用 scripts 與 assets，應與主要 instruction file 分離。
-
-## 版本管理
-
-Consuming projects 在載入共享 skills 前，應以 tag 或 commit SHA 固定本 repository 版本。
-
-會改變行為的更新應有意識地發布，並在廣泛 rollout 前以實際專案使用情境審查。
-
-實際專案情境只用於驗證 shared skill 的通用性，不得把該專案業務規則回灌到 shared skill。
-
-Draft skills 可以快速演進。Stable skills 僅應透過已審查變更更新。
-
-## Plugin Packaging
-
-全新專案預設使用 private plugin marketplace 取得 shared skills。Skill 內文只維護在 canonical `skills/`；工具差異集中在 `skills.manifest.json` 的 `distribution` 區塊與 generated adapter manifests。直接載入 skill path、git submodule 或 vendored copy 僅保留給離線環境或工具尚未支援 plugin marketplace 的情境。
-
-更新 canonical skills 或 plugin metadata 後，先同步 adapter files：
+修改 skill 或 metadata 後：
 
 ```bash
 node scripts/sync-plugin-adapters.mjs
-```
-
-再執行 validation：
-
-```bash
 node scripts/validate-skills.mjs
 ```
 
-Validation 會檢查 manifest、`SKILL.md` frontmatter、skill discovery，以及 Codex / Claude adapter files 是否仍與 manifest 同步且指向 repository root。
+Release 前至少確認：
 
-Codex adapter：
+```bash
+node scripts/sync-plugin-adapters.mjs --check
+node scripts/validate-skills.mjs
+claude plugin validate .
+```
 
-- Marketplace catalog: `.agents/plugins/marketplace.json`
-- Plugin root: repository root
-- Plugin manifest: `.codex-plugin/plugin.json`
-- Skill source: `skills/`
+若目前環境有 Codex 的 `plugin-creator` skill，也可以再執行它提供的 plugin validator。
 
-Claude adapter：
+建立 release：
 
-- Marketplace catalog: `.claude-plugin/marketplace.json`
-- Plugin root: repository root
-- Plugin manifest: `.claude-plugin/plugin.json`
-- Skill source: `skills/`
+```bash
+git add -A
+git commit -m "[chore] 發布 supermedia skills 版本"
+git tag -a v0.1.0 -m "v0.1.0"
+git push origin main
+git push origin v0.1.0
+```
 
-私有分享時，將本 repository 放在 private GitHub、GitLab 或其他 private git host，並讓同事使用自己的 git credentials 安裝 marketplace。Marketplace 是 plugin catalog，不等於公開上架。
+## scripts 說明
 
-## 專案引用
+- `scripts/sync-plugin-adapters.mjs`: 從 `skills.manifest.json` 與 `VERSION` 產生 Codex / Claude adapter files。加上 `--check` 時只檢查是否同步，不寫檔。
+- `scripts/validate-skills.mjs`: 驗證 VERSION、CHANGELOG、manifest、skill path、frontmatter、discovered skills 與 generated adapters 是否一致。
 
-本 repository 是共通 SKILL 的 canonical source。Consuming projects 只保留專案業務規則、環境設定、repo-specific commands 與部署限制。
+一般維護者只需要執行 scripts，不需要閱讀 scripts 內容；只有驗證失敗或要改 plugin 包裝規則時才需要進去看。
 
-Consuming projects 不應 local-edit shared skills；若需要改 shared 行為，應回到本 repository 修改並更新 changelog。
+## Repo 轉移
 
-引用方式優先使用 private plugin marketplace，並記錄 pinned tag 或 commit SHA。若專案仍使用 git submodule、vendored copy 或 agent skill path，必須說明原因與升級策略。
+未來如果 repository 從 `s80144659/supermedia-skills` 轉移到其他 GitHub organization，plugin 內部通常不需要重包，因為 marketplace name `supermedia` 和 plugin name `supermedia-skills` 可以保持不變。
 
-Consuming project 的 `AGENTS.md` 應明確列出 shared skills 來源、pinned ref、升級時需檢查 `CHANGELOG.md`，並說明本專案只補 project-specific instructions。
+需要更新的是 consuming projects 的 marketplace source：
 
-可使用 `templates/consuming-project-AGENTS.md` 作為 consuming project 的最小引用範本。
+- Codex: 重新 `codex plugin marketplace add <new-url> --ref <tag>`，或移除舊 source 後再加新 source。
+- Claude: 重新 `claude plugin marketplace add <new-url>#<tag>`，或更新專案的 `.claude/settings.json`。
+- 專案文件中的 Marketplace source URL。
 
-## 貢獻
+GitHub 可能會保留 redirect，但正式團隊流程不要依賴 redirect；轉移後建議明確更新成新 organization URL。
 
-所有新增與更新都必須維持本 repository 的共享範圍。
+## 原則
 
-新增 skills 應審查命名、觸發準確性、可移植性、安全性與維護成本。
-
-既有 skills 僅應在能改善重複執行、降低歧義，或處理已觀察到的失敗模式時修訂。
+- Shared skills 保持專案中立，不放單一產品規格。
+- Project-specific rules 留在 consuming project。
+- Consuming project pin tag 或 commit SHA，不追浮動 main。
+- 變更會影響 agent 行為時，更新 `CHANGELOG.md`。
+- Adapter files 由 script 產生，不手動維護。

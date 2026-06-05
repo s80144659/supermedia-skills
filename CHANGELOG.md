@@ -2,7 +2,7 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
-## [0.1.0-draft] - 2026-06-05
+## [0.1.0] - 2026-06-05
 
 - 建立 `supermedia-skills` repository 的 shared skill catalog 定位。
 - 建立中文 README 治理摘要、contribution、agent 操作規則與 changelog 文件。
