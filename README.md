@@ -10,7 +10,7 @@ Supermedia Skills 是給組織內部共用的 AI coding workflows。
 - 一個 marketplace：`supermedia`。
 - 一個 plugin：`supermedia-skills`。
 - Codex 與 Claude Code 安裝入口。
-- 版本 pinning：各專案可固定使用 `v0.1.0` 或指定 commit SHA。
+- 版本策略：內部專案預設追 `stable`，需要可重現版本時使用 release tag 或 commit SHA。
 - Private repo 分享模式：透過 GitHub repo 權限授權給同事與團隊。
 - 適合放在公司、團隊或多專案共用的工程 workflow。
 
@@ -22,8 +22,8 @@ Supermedia Skills 的使用方式是：
 
 1. Shared engineering workflows 維護在本 repository。
 2. 各專案透過 marketplace 安裝 `supermedia-skills`。
-3. 各專案 pin 到明確版本，例如 `v0.1.0`。
-4. Shared workflow 更新時發布新 tag，各專案再升級到新版本。
+3. 內部專案預設追 `stable`。
+4. Shared workflow 驗證後推進 `stable`，重要里程碑再發布 release tag。
 
 這個做法讓組織只維護一份 shared skill 內容，同時讓不同專案保留自己的 `AGENTS.md`、`CLAUDE.md` 與 project-specific rules。
 
@@ -46,14 +46,23 @@ Supermedia Skills 的使用方式是：
 | `laravel-security-testing` | Laravel API 安全測試、權限矩陣、租戶隔離、敏感資料。 |
 | `laravel-pdf-generation` | Laravel PDF 產生方案與 CJK 字型 / rendering 風險。 |
 
+## 分支與版本策略
+
+| Ref | 用途 |
+| --- | --- |
+| `main` | 最新開發線，適合維護者快速迭代與測試。 |
+| `stable` | 組織內推薦使用線，驗證後才推進。 |
+| `vX.Y.Z` | 歷史固定版本，適合需要完全可重現的專案。 |
+| Commit SHA | 單一固定 commit，適合臨時鎖定或問題排查。 |
+
 ## 安裝
 
 ### Codex
 
-加入 marketplace 並固定到 release tag：
+加入 marketplace 並追蹤組織穩定分支：
 
 ```bash
-codex plugin marketplace add https://github.com/s80144659/supermedia-skills.git --ref v0.1.0
+codex plugin marketplace add https://github.com/s80144659/supermedia-skills.git --ref stable
 codex plugin add supermedia-skills@supermedia
 ```
 
@@ -75,7 +84,7 @@ codex plugin marketplace upgrade supermedia
 在 Claude Code 互動模式內：
 
 ```text
-/plugin marketplace add https://github.com/s80144659/supermedia-skills.git#v0.1.0
+/plugin marketplace add https://github.com/s80144659/supermedia-skills.git#stable
 /plugin install supermedia-skills@supermedia
 /reload-plugins
 ```
@@ -83,7 +92,7 @@ codex plugin marketplace upgrade supermedia
 或使用 shell CLI：
 
 ```bash
-claude plugin marketplace add https://github.com/s80144659/supermedia-skills.git#v0.1.0
+claude plugin marketplace add https://github.com/s80144659/supermedia-skills.git#stable
 claude plugin install supermedia-skills@supermedia --scope project
 ```
 
@@ -100,7 +109,7 @@ Consuming project 建議在 `AGENTS.md` 或 `CLAUDE.md` 記錄 shared skills con
 - Marketplace name: supermedia
 - Plugin name: supermedia-skills
 - Integration method: private-plugin-marketplace
-- Pinned ref: v0.1.0
+- Pinned ref: stable
 ```
 
 常見使用方式：
@@ -140,7 +149,7 @@ Repository 轉移到新的 GitHub organization 時，Marketplace name `supermedi
 - 各專案文件中的 Marketplace source。
 - 各專案設定中的 marketplace source。
 
-轉移後使用新 organization URL 重新加入 marketplace，並讓各專案 pin 到明確 tag。
+轉移後使用新 organization URL 重新加入 marketplace，並讓內部專案追 `stable`；需要可重現版本時再 pin release tag 或 commit SHA。
 
 ## 參考
 
