@@ -10,6 +10,53 @@ Shared engineering skills are sourced from `supermedia-skills`.
 - Codex marketplace catalog in `supermedia-skills`: `.agents/plugins/marketplace.json`
 - Claude marketplace catalog in `supermedia-skills`: `.claude-plugin/marketplace.json`
 
+### Codex — `.agents/plugins/marketplace.json`
+
+Create this file at `.agents/plugins/marketplace.json` in the consuming project. Use `"source": "git"` so Codex fetches the plugin from the remote repository. Do not copy the `"source": "local"` variant found inside `supermedia-skills` itself — that file is for the plugin repo's own self-description, not for consuming projects.
+
+```json
+{
+  "name": "supermedia",
+  "interface": {
+    "displayName": "Supermedia"
+  },
+  "plugins": [
+    {
+      "name": "supermedia-skills",
+      "source": {
+        "source": "git",
+        "url": "<private-git-url>"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+### Claude — `.claude/settings.json`
+
+Add the marketplace entry and enable the plugin:
+
+```json
+{
+  "enabledPlugins": {
+    "supermedia-skills@supermedia": true
+  },
+  "extraKnownMarketplaces": {
+    "supermedia": {
+      "source": {
+        "source": "git",
+        "url": "<private-git-url>"
+      }
+    }
+  }
+}
+```
+
 Optional local authoring paths, only for offline fallback or tools that cannot install the private marketplace:
 
 - Shared skill root: `<path-to-supermedia-skills>/skills`
