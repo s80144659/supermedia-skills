@@ -25,7 +25,8 @@ Create this file at `.agents/plugins/marketplace.json` in the consuming project.
       "name": "supermedia-skills",
       "source": {
         "source": "git",
-        "url": "<private-git-url>"
+        "url": "<private-git-url>",
+        "ref": "stable"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -50,7 +51,8 @@ Add the marketplace entry and enable the plugin:
     "supermedia": {
       "source": {
         "source": "git",
-        "url": "<private-git-url>"
+        "url": "<private-git-url>",
+        "ref": "stable"
       }
     }
   }
