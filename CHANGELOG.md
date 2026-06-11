@@ -2,6 +2,10 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
+## [Unreleased]
+
+- 為 `test-review-sop` 新增「AI 生成測試常見反模式」段落，提供 happy-path bias、測實作而非行為、coverage 灌水、flaky、magic number、assertion roulette、弱斷言與過度 mock 的掃描清單，並導回現行審查流程與停止條件。
+
 ## [0.1.0] - 2026-06-05
 
 - 建立 `supermedia-skills` repository 的 shared skill catalog 定位。
