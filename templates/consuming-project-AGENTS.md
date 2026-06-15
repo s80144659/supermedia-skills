@@ -49,6 +49,7 @@ Add the marketplace entry and enable the plugin:
   },
   "extraKnownMarketplaces": {
     "supermedia": {
+      "autoUpdate": true,
       "source": {
         "source": "git",
         "url": "<private-git-url>",
