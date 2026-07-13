@@ -21,7 +21,7 @@ description: Use when creating, updating, compressing, removing, or syncing shar
 1. 判斷規則屬於共享工程邏輯，還是專案專屬行為。
 2. 建立新技能前先搜尋既有技能。
 3. 前置中繼資料的 `name` 與 `description` 保持英文優先且以觸發條件為導向。
-4. 除必要技術名詞、工具名、程式碼、指令與欄位名稱外，`SKILL.md` 正文使用中文。
+4. 除必要技術名詞、工具名、程式碼、指令、欄位名稱與產業通用縮寫外，`SKILL.md` 正文使用繁體中文，並優先採台灣團隊常用術語。
 5. 共通指引移入共享技能後，只在確認 consuming project 已引用 pinned shared skill，且該段落不是 project-specific override 時，才移除專案文件中的重複內容。
 6. 專案專屬命令、容器名稱、業務角色與環境限制留在引用專案。
 7. 新增、移動、重新命名或刪除技能時，同步更新技能清單、變更紀錄與驗證期待。
@@ -34,7 +34,7 @@ description: Use when creating, updating, compressing, removing, or syncing shar
 ## 品質檢查
 
 - 技能有清楚觸發條件，且可獨立使用。
-- `name` 與 `description` 保持英文優先，正文維持中文優先。
+- `name` 與 `description` 保持英文優先，正文維持繁體中文優先；若英文不是軟體工程專有名詞、工具名稱或程式碼識別字，不要為了正式感而使用英文。
 - 作業流程不需要閱讀無關專案歷史也能執行。
 - 停止條件能防止不安全假設。
 - 選用資源以漸進揭露方式載入，不預設貼進 `SKILL.md`。
