@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- 補強 `laravel-scramble-api-docs` 的 model-backed Resource 推導原則：優先直接包 Eloquent model、使用 `@mixin`，並在 endpoint 契約不同時拆分專用 Resource。
 - 補強 `git-commit-workflow` 的任務追溯流程：可用 Notion MCP 時查找對應 TSK 編號並附於 commit 標題，找不到時不阻擋提交。
 - 為 `test-review-sop` 新增「AI 生成測試常見反模式」段落，提供 happy-path bias、測實作而非行為、coverage 灌水、flaky、magic number、assertion roulette、弱斷言與過度 mock 的掃描清單，並導回現行審查流程與停止條件。
 - 補強 `project-truth-source` 的規格文件修訂原則：正文保留現行規格，追責性決策變更使用段落「決策註記」，完整脈絡移到「決策紀錄」或「決策說明」。
