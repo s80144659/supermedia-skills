@@ -21,6 +21,7 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 ## 檢查清單
 
 - 除非必要，請求欄位不在 Form Request 與控制器註解中重複描述。
+- Controller 公開方法的 docblock 或 Scramble attribute 說明提到資料庫欄位名稱時，使用 Markdown inline code 標示，例如 `assignment_source`。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
 - model-backed Resource 應讓 Scramble 從 model schema、cast、accessor 或 method return type 推導欄位；只有推導缺口才補精準型別提示。
 - API 契約需要穩定鍵時，Resource 不使用條件式欄位。
