@@ -2,7 +2,7 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
-## [Unreleased]
+## [0.2.0] - 2026-07-31
 
 - 新增 `claude-5-context-engineering`：規範撰寫給 Claude 5 世代 agent 的指令文件，涵蓋原則優先於禁令、介面設計優先於範例、漸進揭露與高保真參照物，並提供既有指令檔的精簡流程與停止條件。
 - 補強 skill metadata 與 API 文件格式：`name`、`description` 必須完整使用英文；Controller 公開方法文件中的資料庫欄位名稱使用 Markdown inline code。
