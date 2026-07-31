@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- 新增 `claude-5-context-engineering`：規範撰寫給 Claude 5 世代 agent 的指令文件，涵蓋原則優先於禁令、介面設計優先於範例、漸進揭露與高保真參照物，並提供既有指令檔的精簡流程與停止條件。
 - 補強 skill metadata 與 API 文件格式：`name`、`description` 必須完整使用英文；Controller 公開方法文件中的資料庫欄位名稱使用 Markdown inline code。
 - 補強 `laravel-scramble-api-docs` 的 model-backed Resource 推導原則：優先直接包 Eloquent model、使用 `@mixin`，並在 endpoint 契約不同時拆分專用 Resource。
 - 補強 `git-commit-workflow` 的任務追溯流程：可用 Notion MCP 時查找對應 TSK 編號並附於 commit 標題，找不到時不阻擋提交。

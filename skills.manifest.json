@@ -128,6 +128,14 @@
       "stability": "draft"
     },
     {
+      "name": "claude-5-context-engineering",
+      "scope": "common",
+      "path": "skills/claude-5-context-engineering",
+      "entrypoint": "SKILL.md",
+      "description": "Use when authoring, reviewing, or trimming instructions that Claude 5 generation coding agents read, including CLAUDE.md, AGENTS.md, SKILL.md, system prompts, and tool descriptions, or when such a file has grown long, rule-heavy, or example-heavy.",
+      "stability": "draft"
+    },
+    {
       "name": "tenant-access-boundaries",
       "scope": "common",
       "path": "skills/tenant-access-boundaries",
