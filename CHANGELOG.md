@@ -6,6 +6,7 @@
 
 - 新增 `claude-5-context-engineering`：規範撰寫給 Claude 5 世代 agent 的指令文件，涵蓋原則優先於禁令、介面設計優先於範例、漸進揭露與高保真參照物，並提供既有指令檔的精簡流程與停止條件。
 - 補強 skill metadata 與 API 文件格式：`name`、`description` 必須完整使用英文；Controller 公開方法文件中的資料庫欄位名稱使用 Markdown inline code。
+- 擴充 `ai-change-review-guardrails` 的撰寫階段守門規則：註解只保存可證實且無法由程式碼表達的原因或限制，並以能否阻止合理但錯誤的修改作為保留判準。
 - 補強 `laravel-scramble-api-docs` 的 model-backed Resource 推導原則：優先直接包 Eloquent model、使用 `@mixin`，並在 endpoint 契約不同時拆分專用 Resource。
 - 補強 `git-commit-workflow` 的任務追溯流程：可用 Notion MCP 時查找對應 TSK 編號並附於 commit 標題，找不到時不阻擋提交。
 - 為 `test-review-sop` 新增「AI 生成測試常見反模式」段落，提供 happy-path bias、測實作而非行為、coverage 灌水、flaky、magic number、assertion roulette、弱斷言與過度 mock 的掃描清單，並導回現行審查流程與停止條件。

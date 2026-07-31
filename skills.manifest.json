@@ -100,7 +100,7 @@
       "scope": "common",
       "path": "skills/ai-change-review-guardrails",
       "entrypoint": "SKILL.md",
-      "description": "Use before accepting AI-generated or large backend/API/scheduler/security changes, especially when hidden assumptions or blast radius matter.",
+      "description": "Use when implementing or reviewing large backend/API/scheduler/security changes, or when AI-generated code has hidden assumptions, broad blast radius, non-obvious business intent, ordering constraints, or project-required workarounds.",
       "stability": "draft"
     },
     {

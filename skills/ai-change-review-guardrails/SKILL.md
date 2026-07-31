@@ -1,11 +1,11 @@
 ---
 name: ai-change-review-guardrails
-description: Use before accepting AI-generated or large backend/API/scheduler/security changes, especially when hidden assumptions or blast radius matter.
+description: Use when implementing or reviewing large backend/API/scheduler/security changes, or when AI-generated code has hidden assumptions, broad blast radius, non-obvious business intent, ordering constraints, or project-required workarounds.
 ---
 
 # AI 變更審查守門規則
 
-使用本技能作為 AI 生成變更或大範圍變更的合併前審查清單。
+使用本技能撰寫或審查 AI 生成變更與大範圍變更。
 
 ## 審查面向
 
@@ -15,6 +15,28 @@ description: Use before accepting AI-generated or large backend/API/scheduler/se
 4. 信任邊界：檢查未受信任輸入、認證、授權、速率限制、檔案上傳、外部 API 與敏感資料暴露。
 5. 失效模式：檢查逾時、重複請求、重試、部分寫入、競態條件與回滾行為。
 6. 驗證證據：執行測試，或說明哪些內容無法驗證。
+7. 可讀性：確認命名與結構能表達「做什麼」，必要的簡短註解能補充「為什麼」。
+
+## 函式內註解
+
+註解不是程式碼字幕，而是保存程式碼本身看不出的約束。只有當註解能阻止一次合理但錯誤的修改時，才保留它。
+
+1. 先用命名、抽取函式、常數與程式結構表達「做什麼」；能直接表達時不加註解。
+2. 只為程式碼無法可靠表達的資訊加註解：
+   - 業務不變量、重要目的或拒絕條件。
+   - 不可任意調整的執行順序、交易或鎖定範圍、副作用與外部契約。
+   - 因專案、相容性或框架限制而必須保留的少見寫法。
+3. 註解貼近最小相關區塊，以單句說明原因、限制或改動後果。
+4. 不要逐行翻譯程式碼、重複型別或結構，也不要只寫「特殊處理」「業務需要」等空泛理由。
+5. 原因無法由規格、測試、issue、外部契約或既有程式脈絡證實時，先查證或詢問，不得用註解把推測寫成事實。
+6. 修改行為時同步刪除或更新相鄰註解。
+
+例如：
+
+- 不佳：`// 鎖定額度帳戶。`
+- 較佳：`// 鎖定額度帳戶，避免並行請求重複扣款。`
+- 不佳：`// 特殊處理舊資料。`
+- 較佳：`// 保留 null 與未提供的差異，避免清除欄位被忽略。`
 
 ## 後端/API 檢查清單
 
