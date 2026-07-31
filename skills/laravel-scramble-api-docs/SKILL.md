@@ -25,6 +25,8 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
 - model-backed Resource 應讓 Scramble 從 model schema、cast、accessor 或 method return type 推導欄位；只有推導缺口才補精準型別提示。
 - API 契約需要穩定鍵時，Resource 不使用條件式欄位。
+- `JsonResource::resolve()` 不保證遞迴展開 nested Resource；resolved payload 仍含 `JsonResource` 或 `ResourceCollection` 且會再交給其他 Resource 時，除 export 外還要用 feature test 核對實際 nested scalar 值。
+- 可空且帶格式的 response scalar 必須同時保留型別與格式，例如 `@var string|null` 搭配 `@format date-time`，並在 export 核對 nullability 未因格式註解遺失。
 - 範例只用來展示載荷，不取代結構驗證。
 - 文件、Resource、Form Request、測試與面向客戶端的行為一致。
 
