@@ -21,6 +21,7 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 ## 檢查清單
 
 - 除非必要，請求欄位不在 Form Request 與控制器註解中重複描述。
+- Form Request 使用 `array:key1,key2` 限制允許鍵時，Scramble 會把列出的每個 key 標為 required，即使對應子欄位規則為 nullable；陣列含選填欄位時改用純 `array`，required 與可空性交由各子欄位的巢狀規則表達。
 - Controller 公開方法的 docblock 或 Scramble attribute 說明提到資料庫欄位名稱時，使用 Markdown inline code 標示，例如 `assignment_source`。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
 - model-backed Resource 應讓 Scramble 從 model schema、cast、accessor 或 method return type 推導欄位；只有推導缺口才補精準型別提示。
