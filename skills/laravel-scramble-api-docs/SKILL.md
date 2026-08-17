@@ -25,8 +25,10 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 - Controller 公開方法的 docblock 或 Scramble attribute 說明提到資料庫欄位名稱時，使用 Markdown inline code 標示，例如 `assignment_source`。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
 - model-backed Resource 應讓 Scramble 從 model schema、cast、accessor 或 method return type 推導欄位；只有推導缺口才補精準型別提示。
+- `JsonResource` 的欄位型別與可空性寫在各欄位前 docblock 的 `@var`；寫在 `toArray()` 的 method 層 `@return` 不會進入 schema。
 - API 契約需要穩定鍵時，Resource 不使用條件式欄位。
 - `JsonResource::resolve()` 不保證遞迴展開 nested Resource；resolved payload 仍含 `JsonResource` 或 `ResourceCollection` 且會再交給其他 Resource 時，除 export 外還要用 feature test 核對實際 nested scalar 值。
+- Resource 的 `toArray()` 固定回傳 array，巢狀物件是否為 null 由呼叫端判斷；宣告成 `?array` 並提早 `return null` 會讓該 component 退化成不含欄位的空殼。
 - 可空且帶格式的 response scalar 必須同時保留型別與格式，例如 `@var string|null` 搭配 `@format date-time`，並在 export 核對 nullability 未因格式註解遺失。
 - 範例只用來展示載荷，不取代結構驗證。
 - 文件、Resource、Form Request、測試與面向客戶端的行為一致。
