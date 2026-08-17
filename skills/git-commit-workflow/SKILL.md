@@ -31,7 +31,7 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 - `type` 使用簡短英文分類，例如 `feat`、`fix`、`docs`、`chore`、`refactor`、`test`。
 - 摘要使用中文為主，描述這個提交實際改變了什麼。
 - 不在提交主旨尾端附加 skill 名稱、流程分類或其他括號註記，除非使用者明確指定。
-- 複雜提交可在主旨後補充 why / what / impact；簡單提交維持單行。
+- 複雜提交在主旨後補充 body，固定使用 `Why:`、`What:`、`Impact:` 三段標籤，三段都要寫；簡單提交維持單行，不加 body。
 
 ## 回覆檢查清單
 

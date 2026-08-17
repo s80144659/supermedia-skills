@@ -2,6 +2,10 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
+## [0.2.2] - 2026-08-17
+
+- 明確 `git-commit-workflow` 的 commit body 結構：複雜提交固定使用 `Why:`、`What:`、`Impact:` 三段標籤且三段都要寫。原本「可在主旨後補充 why / what / impact」會被讀成可自由補充散文，導致 body 只寫了 what。
+
 ## [0.2.1] - 2026-08-11
 
 - 補強 `laravel-scramble-api-docs`：Form Request 使用 `array:key1,key2` 限制允許鍵時，Scramble 會把列出的每個 key 標為 required，即使子欄位規則為 nullable；陣列含選填欄位時改用純 `array`，required 與可空性交由各子欄位的巢狀規則表達。

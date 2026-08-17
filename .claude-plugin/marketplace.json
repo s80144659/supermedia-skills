@@ -7,13 +7,13 @@
   "metadata": {
     "description": "Private Supermedia plugin marketplace."
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "plugins": [
     {
       "name": "supermedia-skills",
       "source": "./",
       "description": "Shared Supermedia engineering skills for reusable software delivery workflows.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": {
         "name": "Supermedia Engineering"
       }
