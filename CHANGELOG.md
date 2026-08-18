@@ -2,6 +2,12 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
+## [0.2.3] - 2026-08-18
+
+- 補強 `laravel-scramble-api-docs` 的欄位型別來源與 `toArray()` 回傳型別守門：型別與可空性只認各欄位前 docblock 的 `@var`，method 層 `@return` 不進 schema，`make:resource` 產生的那份直接刪掉；`toArray()` 宣告成 `?array` 並提早 `return null` 會讓該 component 退化成不含欄位的空殼。
+- 補強 `laravel-scramble-api-docs` 的推導失敗辨識：export 中 `type: string` 的欄位要逐一核對實際回傳值。Scramble 推導失敗時輸出的 `UnknownType` 繼承 `StringType`，在文件上與真正的字串無法分辨，只看 export 會把錯誤 schema 當成正確結果收工。
+- 補強 `git-commit-workflow` 的 commit body 內容判準：body 只寫 diff 看不出來的動機、取捨與影響，`Why:` 不得把單一處程式歸納出的模式寫成專案既成慣例，`Impact:` 不列入未被本次改動影響的既有防護，行為改變以領域語彙而非 code identifier 描述。0.2.2 只定義了三段結構，未約束內容，導致 body 重述 diff、混入推測性慣例並過度冗長。
+
 ## [0.2.2] - 2026-08-17
 
 - 明確 `git-commit-workflow` 的 commit body 結構：複雜提交固定使用 `Why:`、`What:`、`Impact:` 三段標籤且三段都要寫。原本「可在主旨後補充 why / what / impact」會被讀成可自由補充散文，導致 body 只寫了 what。
