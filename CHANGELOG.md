@@ -2,6 +2,10 @@
 
 本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
 
+## [Unreleased]
+
+- 補強 `git-commit-workflow` 的工作樹盤點：改用 `git status --porcelain --untracked-files=all` 逐檔展開未追蹤檔案，並在全部提交後複查剩餘內容。預設 status 會把未追蹤目錄摺疊成一行，新增的檔案不會逐一出現，功能少提交一塊也不會在收工前被發現。
+
 ## [0.2.3] - 2026-08-18
 
 - 補強 `laravel-scramble-api-docs` 的欄位型別來源與 `toArray()` 回傳型別守門：型別與可空性只認各欄位前 docblock 的 `@var`，method 層 `@return` 不進 schema，`make:resource` 產生的那份直接刪掉；`toArray()` 宣告成 `?array` 並提早 `return null` 會讓該 component 退化成不含欄位的空殼。

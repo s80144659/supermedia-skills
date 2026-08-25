@@ -11,7 +11,7 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 
 ## 作業流程
 
-1. 暫存前先檢查 `git status --short` 與相關差異。
+1. 暫存前用 `git status --porcelain --untracked-files=all` 看完整工作樹與相關差異；未追蹤目錄在預設輸出會被摺疊，逐檔展開才不會漏掉這次功能缺的新檔案。
 2. 依單一責任分組：功能、錯誤修正、重構、測試、文件、工具或產生物。
 3. 不把無關檔案或無關變更區塊放進同一個提交。
 4. 若同一檔案包含多個變更，只暫存屬於目前提交的變更區塊。
@@ -20,6 +20,7 @@ description: Use when staging, splitting, reviewing, or creating commits in a di
 7. 透過 Notion MCP 查詢任務列表或專案列表最新 30 筆，取得對應的 TSK 編號附於標題尾端；找不到對應任務時繼續提交，不阻擋流程。
 8. 執行能證明已暫存行為的最小驗證；若無法驗證，說明原因。
 9. 提交訊息使用統一格式：`[type] 摘要 (TSK-編號)`；無對應任務時省略 `(TSK-編號)`。
+10. 全部提交後重新檢查工作樹，確認剩下的每一項都是刻意排除的。
 
 ## 安全規則
 

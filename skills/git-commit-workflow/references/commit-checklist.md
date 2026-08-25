@@ -9,7 +9,7 @@
 
 ## 提交前檢查
 
-1. 執行 `git status --short`。
+1. 執行 `git status --porcelain --untracked-files=all`，逐檔確認未追蹤檔案。
 2. 執行 `git diff --stat`。
 3. 確認是否需要拆 commit。
 4. 確認是否有無關檔案或 hunk 不應 stage。
@@ -20,6 +20,7 @@
 6. 檢查相關文件與技能是否需要同步。
 7. 若本次含資料庫遷移，檢查檔名時間戳是否與相依、部署或回復順序一致。
 8. 提交前執行 `git diff --staged` 並完整檢查內容。
+9. 全部提交後重新執行同一個 status 指令，確認剩餘內容都是刻意排除的。
 
 ## Commit Message 原則
 
@@ -33,6 +34,7 @@
 
 ## 常見誤區
 
+- 只看預設 `git status` 輸出，漏掉被摺疊的未追蹤新檔案。
 - 把無關 hunk 一起 stage。
 - 為了省事整支檔案直接 stage。
 - 有規格或流程變更卻忘記同步文件或技能。
