@@ -10,11 +10,10 @@ description: Use when creating, changing, renaming, reviewing, or backfilling La
 ## 快速流程
 
 1. 判斷部署狀態：已部署、未部署或未知。
-2. 若已部署或狀態未知，新增向前遷移，不編輯舊遷移。
-3. 若尚未部署，只有在記錄誰需要重新執行遷移後，才可編輯原遷移。
-4. 識別資料影響：資料表、欄位、索引、外鍵、列舉/狀態值、資料回填、不可逆變更。
-5. 新增或更新受資料結構變更影響的測試、factory、seeder、API Resource 與文件。
-6. 執行能證明變更的最小遷移/測試指令。
+2. 依「遷移決策表」選擇做法。
+3. 識別資料影響：資料表、欄位、索引、外鍵、列舉/狀態值、資料回填、不可逆變更。
+4. 新增或更新受資料結構變更影響的測試、factory、seeder、API Resource 與文件。
+5. 執行能證明變更的最小遷移/測試指令。
 
 ## 部署證據
 
@@ -29,7 +28,7 @@ description: Use when creating, changing, renaming, reviewing, or backfilling La
 
 ## 可讀性與基線整理
 
-- 專案確認尚未發布時，把「建立後再修補、加入後再棄用」收斂進乾淨基線；已部署或狀態未知時保留歷史並新增向前遷移。
+- 專案確認尚未發布時，把「建立後再修補、加入後再棄用」收斂進乾淨基線。
 - `Schema::create()` 內先放 `$table->comment()`，再依主鍵、關聯鍵、業務欄位、時間欄位、索引與外鍵排列。
 - 資料表與不直觀欄位使用短句說明實際用途；名稱已清楚的 `id`、`created_at`、`updated_at` 不重複註解。
 - 註解描述目前用途，不記錄改版歷史、方案比較或可從 migration diff 得知的脈絡。

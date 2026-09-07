@@ -11,6 +11,7 @@
 - `laravel-migration-safety` 新增 greenfield 基線收斂與 migration 可讀性規則。
 - `tenant-access-boundaries` 新增巢狀資源可見性跟隨父物件的規則。
 - `git-commit-workflow` 改用逐檔展開的工作樹盤點。
+- `test-review-sop` 與 `laravel-migration-safety` 移除同檔內的重複敘述。
 
 ## [0.2.3] - 2026-08-18
 
