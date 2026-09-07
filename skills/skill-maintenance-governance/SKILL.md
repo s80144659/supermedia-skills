@@ -34,6 +34,7 @@ description: Use when creating, updating, compressing, removing, or syncing shar
 ## 品質檢查
 
 - 技能有清楚觸發條件，且可獨立使用。
+- 同一條規則需要出現在多支技能時，各處各自完整且彼此一致；不要用跨檔案引用建立技能間依賴。Catalog 沒有 dependency 機制，單獨載入其中一支時引用會斷點。
 - `name` 與 `description` 完整使用英文，正文維持繁體中文優先；若正文中的英文不是軟體工程專有名詞、工具名稱或程式碼識別字，不要為了正式感而使用。
 - 作業流程不需要閱讀無關專案歷史也能執行。
 - 停止條件能防止不安全假設。

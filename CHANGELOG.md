@@ -1,6 +1,6 @@
 # Changelog
 
-本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。
+本文件記錄會影響 agents 發現、載入、執行或維護 shared skills 的變更。條目一行一條，只記變更影響；細節、成因與取捨留在對應 commit message。
 
 ## [Unreleased]
 
@@ -12,6 +12,7 @@
 - `tenant-access-boundaries` 新增巢狀資源可見性跟隨父物件的規則。
 - `git-commit-workflow` 改用逐檔展開的工作樹盤點。
 - `test-review-sop` 與 `laravel-migration-safety` 移除同檔內的重複敘述。
+- `skill-maintenance-governance` 新增禁止跨檔案引用建立技能依賴的規則。
 
 ## [0.2.3] - 2026-08-18
 
