@@ -13,7 +13,8 @@
 - 修改前先閱讀 `README.md`、`CONTRIBUTING.md`、`skills.manifest.json` 與目標 `SKILL.md`。
 - 不要把單一 consuming project 的業務規則、暫時性 workaround 或環境設定加入 shared skill。
 - `SKILL.md` frontmatter 的 `name` 與 `description` 使用英文優先。
-- `description` 必須描述 skill 做什麼，以及何時使用。
+- `description` 以觸發條件為導向，說明何時該載入這支 skill。能力與範圍短語可寫，步驟順序、階段數量與子流程名稱不可寫，否則 agent 會照 `description` 行動而略過正文。
+- `description` 的觸發條件必須能與 catalog 中共用名詞的其他 skill 區分；只堆名詞不足時補能力短語，不要靠正文的搭配規則事後補救。
 - 除必要技術名詞、工具名、程式碼、指令與欄位名稱外，`SKILL.md` 正文使用中文。
 - `skills/` 採 flat 目錄；跨框架或 Laravel 等技術棧分類使用 `skills.manifest.json` 的 `scope` 欄位。
 - 保持 `SKILL.md` 精要；長篇資料放入 `references/`。
@@ -22,7 +23,7 @@
 - 變更 canonical skills 或 manifest 後，執行 `node scripts/sync-plugin-adapters.mjs` 重新產生 Codex / Claude adapter manifests；不要新增 `dist/` skill copy。
 - 會影響 agent 行為的變更，必須更新 `CHANGELOG.md`。
 - 新增、刪除、移動、重新命名 skill 或調整 stability，也必須更新 `CHANGELOG.md`。
-- Commit message 使用 `[type] 摘要` 格式，摘要以中文為主，不在尾端附加額外括號註記。
+- Commit message 使用 `[type] 摘要` 格式，摘要以中文為主。本 repository 不使用任務編號，主旨尾端不附加括號註記。
 - 不要回退使用者或其他 agent 已做出的無關變更。
 
 ## Validation

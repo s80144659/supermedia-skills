@@ -13,7 +13,7 @@ Skill 內容應可被 coding agents 發現、載入、執行與驗證。每次�
 1. 確認需求屬於 shared skill，而不是單一專案規則。
 2. 在 `skills/<skill-name>/` 建立自包含目錄，並在 `skills.manifest.json` 設定 `scope`。
 3. 建立 `SKILL.md`，並加入英文優先的 frontmatter。
-4. 讓 `description` 同時說明 skill 做什麼，以及何時應使用。
+4. 讓 `description` 以觸發條件為導向：能力與範圍短語可寫，步驟順序與階段名稱不可寫，並確保能與共用名詞的其他 skill 區分。
 5. 只在必要時加入 `scripts/`、`references/` 或 `assets/`。
 6. 將新 skill 加入 `skills.manifest.json`，並設定 `stability`。
 7. 執行 `node scripts/sync-plugin-adapters.mjs`，從 manifest 重新產生 Codex / Claude adapter manifests。

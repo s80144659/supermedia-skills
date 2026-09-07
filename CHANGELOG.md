@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 - 修正跨 skill 互相衝突的規則：遷移時間戳、真相衝突處理、回應形狀用詞、401/403/404 錯誤碼、commit 主旨格式。同時載入多支 skill 時不再取得互相矛盾的指示。
+- `description` 撰寫標準改為觸發條件導向，與 15 支既有 skill 的實際寫法一致。
 - `laravel-api-contract` 新增請求層冪等鍵的內容比對規則。
 - `scheduler-side-effect-guardrails` 新增外部成功後的持久化與補償邊界。
 - `laravel-migration-safety` 新增 greenfield 基線收斂與 migration 可讀性規則。
