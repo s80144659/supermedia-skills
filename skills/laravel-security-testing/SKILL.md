@@ -39,7 +39,7 @@ description: Use when planning or reviewing Laravel API security test coverage, 
 ## Laravel 檢查清單
 
 - Form Request 對格式錯誤與惡意輸入回 422，而不是 500。
-- 認證失敗穩定區分 401 與 403。
+- 認證與授權失敗的狀態碼與專案錯誤契約一致，且不因帳號或資源是否存在而改變。
 - 限流保護公開認證端點與容易被濫用的端點。
 - Resource 不暴露密碼、權杖、機密、銀行資料、完整身分證字號或內部旗標。
 - 日誌與稽核紀錄避免機密，同時保留足夠追溯性。

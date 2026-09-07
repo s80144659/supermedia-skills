@@ -23,7 +23,7 @@ description: Use when implementing or reviewing Laravel authentication and autho
 - 平台層角色與租戶範圍角色分開判斷；不要用其中一個隱含另一個。
 - Token ability 只能證明權杖被授予能力，不能取代目前使用者、租戶、資源歸屬與生命週期狀態檢查。
 - 管理員或支援覆寫必須走明確 policy/gate/服務分支，並保留稽核與測試。
-- 無法判斷 401 或 403 時，先回到專案既有錯誤契約；若契約衝突，停止確認。
+- 401 與 403 的判斷依專案既有錯誤契約；契約未定義時，未認證回 401、已認證但禁止存取回 403，契約互相衝突時停止確認。
 
 ## Laravel 檢查清單
 
@@ -31,7 +31,7 @@ description: Use when implementing or reviewing Laravel authentication and autho
 - Sanctum 能力或防護穩定，且在單一位置解析。
 - 政策與服務不信任僅來自請求的角色或租戶值。
 - 公開認證端點有登入限流與濫用邊界。
-- 敏感認證失敗回傳穩定的 401 或 403 回應，且不洩漏帳號狀態。
+- 敏感認證失敗不因帳號是否存在或已停權而改變狀態碼與回應形狀，避免帳號枚舉。
 
 ## 停止條件
 
