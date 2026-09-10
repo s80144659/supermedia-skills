@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- `git-commit-workflow` 明訂 commit body 的 `Why:`／`What:`／`Impact:` 三段之間空一行，避免三段黏成一整塊。
 - 新增 `notion-task-and-database-setup`：Notion 任務建立與雙向 relation 驗證，以及新建資料庫加狀態看板 view 的 MCP 操作細節（`schema` DDL、`is_inline`、父層歸屬、`notion-move-pages` 修正）。從專案專屬 skill 收斂而來，移除了原先綁定特定專案的欄位命名與範例。
 
 ## [0.3.0] - 2026-09-07
