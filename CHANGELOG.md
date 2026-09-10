@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- 新增 `notion-task-and-database-setup`：Notion 任務建立與雙向 relation 驗證，以及新建資料庫加狀態看板 view 的 MCP 操作細節（`schema` DDL、`is_inline`、父層歸屬、`notion-move-pages` 修正）。從專案專屬 skill 收斂而來，移除了原先綁定特定專案的欄位命名與範例。
+
 ## [0.3.0] - 2026-09-07
 
 - 修正跨 skill 互相衝突的規則：遷移時間戳、真相衝突處理、回應形狀用詞、401/403/404 錯誤碼、commit 主旨格式。同時載入多支 skill 時不再取得互相矛盾的指示。

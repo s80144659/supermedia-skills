@@ -206,6 +206,14 @@
       "entrypoint": "SKILL.md",
       "description": "Use when choosing a PDF generation approach in a Laravel project, adding a PDF export feature, or troubleshooting PDF font or rendering issues (especially CJK).",
       "stability": "draft"
+    },
+    {
+      "name": "notion-task-and-database-setup",
+      "scope": "common",
+      "path": "skills/notion-task-and-database-setup",
+      "entrypoint": "SKILL.md",
+      "description": "Use when creating a Notion task under a project or version page and verifying its bidirectional relation to the project, or when creating a new Notion database (e.g. a sub-item or feature checklist) with a status-grouped board view.",
+      "stability": "draft"
     }
   ],
   "distribution": {
