@@ -208,6 +208,14 @@
       "stability": "draft"
     },
     {
+      "name": "docker-build-secrets",
+      "scope": "common",
+      "path": "skills/docker-build-secrets",
+      "entrypoint": "SKILL.md",
+      "description": "Use when a Docker build or in-container dependency install needs private credentials such as Composer auth.json, npm tokens, or SSH keys, or when reviewing whether credentials leak into image layers.",
+      "stability": "draft"
+    },
+    {
       "name": "notion-task-and-database-setup",
       "scope": "common",
       "path": "skills/notion-task-and-database-setup",
