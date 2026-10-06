@@ -216,6 +216,14 @@
       "stability": "draft"
     },
     {
+      "name": "container-install-permissions",
+      "scope": "common",
+      "path": "skills/container-install-permissions",
+      "entrypoint": "SKILL.md",
+      "description": "Use when running Composer, npm, or similar dependency installs inside a development container, especially when they fail with write errors, post-install script failures, or file ownership mismatches between the container user and mounted directories.",
+      "stability": "draft"
+    },
+    {
       "name": "notion-task-and-database-setup",
       "scope": "common",
       "path": "skills/notion-task-and-database-setup",

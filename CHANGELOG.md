@@ -6,6 +6,7 @@
 
 - 補強 `ai-change-review-guardrails`：不可變需求須追到所有寫入路徑，並檢查舊測試與文件是否仍允許改寫。
 - 新增 `docker-build-secrets`：建置期憑證不進 image layer 的處理方式、`.dockerignore` 防護、逐層檢查憑證殘留的驗證方式，以及變更既有專案做法前的停止條件。
+- 新增 `container-install-permissions`：容器內安裝套件前比對執行身分與檔案 owner，處理 bind mount 與 named volume 混用造成的寫入失敗。
 
 ## [0.4.0] - 2026-09-10
 
