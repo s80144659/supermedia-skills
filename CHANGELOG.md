@@ -9,6 +9,7 @@
 - 補強 `ai-change-review-guardrails`：不可變需求須追到所有寫入路徑，並檢查舊測試與文件是否仍允許改寫。
 - 新增 `docker-build-secrets`：建置期憑證不進 image layer 的處理方式、`.dockerignore` 防護、逐層檢查憑證殘留的驗證方式，以及變更既有專案做法前的停止條件。
 - 新增 `container-install-permissions`：容器內安裝套件前比對執行身分與檔案 owner，處理 bind mount 與 named volume 混用造成的寫入失敗。
+- 新增 `notion-ticket-work-card-writing`：在 ticket 內嵌的「任務事項」資料庫撰寫後端工作卡，含需求追溯、修改理由、卡片範圍與欄位缺漏時的停止條件。由專案專屬 skill 收斂而來。
 - `git-commit-workflow` 明訂 commit body 的 `Why:`／`What:`／`Impact:` 三段之間空一行，避免三段黏成一整塊。
 - 新增 `notion-task-and-database-setup`：Notion 任務建立與雙向 relation 驗證，以及新建資料庫加狀態看板 view 的 MCP 操作細節（`schema` DDL、`is_inline`、父層歸屬、`notion-move-pages` 修正）。從專案專屬 skill 收斂而來，移除了原先綁定特定專案的欄位命名與範例。
 
