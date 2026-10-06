@@ -1,6 +1,6 @@
 ---
-name: notion-ticket-work-card-writing
-description: Use when writing or revising backend work cards inside the 任務事項 database embedded in a Notion 任務列表 ticket, turning a confirmed requirement into a card with requirement tracing, rationale, scope, and checklist. Not for creating the ticket itself or implementing the code.
+name: notion-ticket-subtask-writing
+description: Use when writing or revising backend sub-tasks (work cards) inside the 任務事項 database embedded in a Notion 任務列表 ticket, turning a confirmed requirement into a card with requirement tracing, rationale, scope, and checklist. Not for creating the ticket itself or implementing the code.
 ---
 
 # Notion ticket 下的後端工作卡
