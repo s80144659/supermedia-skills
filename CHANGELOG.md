@@ -11,7 +11,7 @@
 - 新增 `container-install-permissions`：容器內安裝套件前比對執行身分與檔案 owner，處理 bind mount 與 named volume 混用造成的寫入失敗。
 - 新增 `notion-ticket-subtask-writing`：在 ticket 內嵌的「任務事項」資料庫撰寫後端子任務（工作卡），含需求追溯、修改理由、卡片範圍與欄位缺漏時的停止條件。由專案專屬 skill 收斂而來。
 - `git-commit-workflow` 明訂 commit body 的 `Why:`／`What:`／`Impact:` 三段之間空一行，避免三段黏成一整塊。
-- 新增 `notion-task-and-database-setup`：Notion 任務建立與雙向 relation 驗證，以及新建資料庫加狀態看板 view 的 MCP 操作細節（`schema` DDL、`is_inline`、父層歸屬、`notion-move-pages` 修正）。從專案專屬 skill 收斂而來，移除了原先綁定特定專案的欄位命名與範例。
+- 新增 `notion-ticket-setup`：Notion ticket 建立與雙向 relation 驗證，以及新建資料庫加狀態看板 view 的 MCP 操作細節（`schema` DDL、`is_inline`、父層歸屬、`notion-move-pages` 修正）。從專案專屬 skill 收斂而來，移除了原先綁定特定專案的欄位命名與範例。
 
 ## [0.3.0] - 2026-09-07
 

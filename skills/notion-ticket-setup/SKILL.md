@@ -1,6 +1,6 @@
 ---
-name: notion-task-and-database-setup
-description: Use when creating a Notion task under a project or version page and verifying its bidirectional relation to the project, or when creating a new Notion database (e.g. a sub-item or feature checklist) with a status-grouped board view.
+name: notion-ticket-setup
+description: Use when creating a Notion ticket under a project or version page and verifying its bidirectional relation to the project, or when creating a new Notion database such as a ticket's sub-task list with a status-grouped board view. Not for writing the sub-task content.
 ---
 
 # Notion 任務與資料庫建立

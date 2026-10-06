@@ -232,11 +232,11 @@
       "stability": "draft"
     },
     {
-      "name": "notion-task-and-database-setup",
+      "name": "notion-ticket-setup",
       "scope": "common",
-      "path": "skills/notion-task-and-database-setup",
+      "path": "skills/notion-ticket-setup",
       "entrypoint": "SKILL.md",
-      "description": "Use when creating a Notion task under a project or version page and verifying its bidirectional relation to the project, or when creating a new Notion database (e.g. a sub-item or feature checklist) with a status-grouped board view.",
+      "description": "Use when creating a Notion ticket under a project or version page and verifying its bidirectional relation to the project, or when creating a new Notion database such as a ticket's sub-task list with a status-grouped board view. Not for writing the sub-task content.",
       "stability": "draft"
     }
   ],
