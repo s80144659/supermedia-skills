@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- 補強 `ai-change-review-guardrails`：不可變需求須追到所有寫入路徑，並檢查舊測試與文件是否仍允許改寫。
+
 ## [0.4.0] - 2026-09-10
 
 - `git-commit-workflow` 明訂 commit body 的 `Why:`／`What:`／`Impact:` 三段之間空一行，避免三段黏成一整塊。
