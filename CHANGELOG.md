@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-14
+
+- `ai-change-review-guardrails` 補充 Laravel 檔案用途註解原則：名稱與目錄不足以表達用途或範圍時，在主要宣告前以一行補足，適用於各類 Laravel 檔案，不限 trait。
+- `ai-change-review-guardrails` 補充 PHP 型別引用的可讀性原則：優先 use 與短類名，同名類別使用有意義的別名，框架解析型別保留必要的完整名稱。
+- `laravel-scramble-api-docs` 明訂 PHP 實作與文件型別的引用分工，保留必要的完整類名並核對巢狀 export 契約。
+- `laravel-scramble-api-docs` 明訂說明的資訊分工：簡介先建立 API 的用途與行為想像，欄位規則與回應細節放在對應位置，同一規則不重複撰寫。
+
 ## [0.4.0] - 2026-10-06
 
 - 補強 `ai-change-review-guardrails`：不可變需求須追到所有寫入路徑，並檢查舊測試與文件是否仍允許改寫。

@@ -18,9 +18,19 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 7. 可用時執行專案的 Scramble 分析或匯出指令。
 8. 比對匯出的 `paths` 與 `components.schemas` 中的方法、請求本文、回應包裝、必填欄位、可空性、項目型別與描述。
 
-## 檢查清單
+## 說明的資訊分工
 
-- 除非必要，請求欄位不在 Form Request 與控制器註解中重複描述。
+以「讀者一開始需要看到什麼，才能對 API 建立大致想像」決定簡介內容；同一規則只在最適合的位置揭露，不為了完整而在 API 說明與欄位描述重複撰寫。
+
+- API 簡介交代用途與主要行為，讓讀者先理解這支 API 能完成什麼。
+- Body、path、query 等欄位描述交代必填條件、格式、上限與依其他欄位決定的處理規則。
+- 回應描述交代回傳結構與欄位意義。
+- API 補充說明保留整體行為或副作用，例如整批成功或失敗、通知策略；屬於個別欄位的規則放回欄位描述。
+
+審閱時確認簡介能建立 API 的大致想像，細節能在對應位置找到，且沒有同義重述。這項去重針對手寫說明，不刪除契約必要的 schema、驗證規則或型別。
+
+## 檢查清單
+- PHP 實作使用 `use` 與短類名，同名類別以具意義的 `as` 別名區分；`#[Response(type: ...)]` 字串與 PHPDoc 型別若無法穩定解析短類名，保留完整類名，調整後沿 export 的巢狀 `$ref` 核對契約。
 - Form Request 使用 `array:key1,key2` 限制允許鍵時，Scramble 會把列出的每個 key 標為 required，即使對應子欄位規則為 nullable；陣列含選填欄位時改用純 `array`，required 與可空性交由各子欄位的巢狀規則表達。
 - Controller 公開方法的 docblock 或 Scramble attribute 說明提到資料庫欄位名稱時，使用 Markdown inline code 標示，例如 `assignment_source`。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
