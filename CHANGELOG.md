@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- `laravel-scramble-api-docs` 明訂 `@mixin` 必須寫完整類名，短類名會讓 model inference 靜默消失。
+
 ## [0.4.1] - 2026-10-14
 
 - `ai-change-review-guardrails` 補充 Laravel 檔案用途註解原則：名稱與目錄不足以表達用途或範圍時，在主要宣告前以一行補足，適用於各類 Laravel 檔案，不限 trait。
