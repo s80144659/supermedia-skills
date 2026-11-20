@@ -33,6 +33,9 @@ Scramble 文件應反映可執行的 Laravel 請求與回應契約。
 - PHP 實作使用 `use` 與短類名，同名類別以具意義的 `as` 別名區分；`#[Response(type: ...)]` 字串與 PHPDoc 型別若無法穩定解析短類名，保留完整類名，調整後沿 export 的巢狀 `$ref` 核對契約。
 - `@mixin` 一律寫完整類名（`@mixin \App\Models\Task`）：短類名 Scramble 讀不到 model，欄位的 nullable 與 enum `$ref` 會靜默退化成 `string`。欄位型別全是手寫 `@var` 的 Resource 在 export 看不出差異，仍維持完整類名。
 - Form Request 使用 `array:key1,key2` 限制允許鍵時，Scramble 會把列出的每個 key 標為 required，即使對應子欄位規則為 nullable；陣列含選填欄位時改用純 `array`，required 與可空性交由各子欄位的巢狀規則表達。
+- Scramble 產生文件時會實際執行 `rules()`，此時沒有登入使用者；`Rule::in()` 若依目前角色組清單，文件只會列出無身分分支的值。`Rule::in()` 放全集，角色限制改用 closure rule 檢查（Scramble 會略過 closure），並在欄位描述寫明各角色可選範圍。
+- 陣列參數（例如 query 的 `fields[]`）的描述與 `@example` 寫在 `'fields.*'` 規則前；寫在父層 `'fields'` 前，export 後描述是空的。
+- 多行欄位描述若要條列，整段都用 `-` 開頭；「標題行 + 空行 + 條列」會被合併成「標題 - 第一點」。
 - Controller 公開方法的 docblock 或 Scramble attribute 說明提到資料庫欄位名稱時，使用 Markdown inline code 標示，例如 `assignment_source`。
 - 回應包裝欄位，例如 `status`、`code`、`message`、`data`、`meta`，表達一致。
 - model-backed Resource 應讓 Scramble 從 model schema、cast、accessor 或 method return type 推導欄位；只有推導缺口才補精準型別提示。

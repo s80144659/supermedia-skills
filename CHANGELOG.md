@@ -12,6 +12,7 @@
 - 新增 `writing-business-policy`：現階段依 Minto 金字塔原理組織文件、DMN 決策模型與標記法表達決策、STE 原則修整中文；以專案風格圖片建立框架、文章式展開的可搜尋文字保留條件，逐步沉澱團隊寫法。
 
 - `laravel-scramble-api-docs` 明訂 `@mixin` 必須寫完整類名，短類名會讓 model inference 靜默消失。
+- `laravel-scramble-api-docs` 補充 Form Request 推導缺口：依角色組的 `Rule::in()` 文件只會列出無身分分支、陣列參數描述要寫在 `.*` 規則前、多行描述要條列就整段以 `-` 開頭。
 
 ## [0.4.1] - 2026-10-14
 
