@@ -104,6 +104,14 @@
       "stability": "draft"
     },
     {
+      "name": "iterating-product-ui",
+      "scope": "common",
+      "path": "skills/iterating-product-ui",
+      "entrypoint": "SKILL.md",
+      "description": "Use when revising existing product interfaces in Figma or another editable design file from user stories, especially for occasional lookups, optional inputs, data-only variants, or visual changes that reviewers need to locate.",
+      "stability": "draft"
+    },
+    {
       "name": "ai-change-review-guardrails",
       "scope": "common",
       "path": "skills/ai-change-review-guardrails",
