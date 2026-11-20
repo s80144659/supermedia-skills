@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+- `writing-business-policy` 補充完整論述段落、閱讀版面檢查，以及多人／多 AI 協作時的最新內容核對與局部更新原則。
+- 新增 `writing-business-policy`：現階段依 Minto 金字塔原理組織文件、DMN 決策模型與標記法表達決策、STE 原則修整中文；以專案風格圖片建立框架、文章式展開的可搜尋文字保留條件，逐步沉澱團隊寫法。
+
 - `laravel-scramble-api-docs` 明訂 `@mixin` 必須寫完整類名，短類名會讓 model inference 靜默消失。
 
 ## [0.4.1] - 2026-10-14

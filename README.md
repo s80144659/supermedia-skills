@@ -32,6 +32,7 @@ Supermedia Skills 的使用方式是：
 | Skill | 用途 |
 | --- | --- |
 | `project-truth-source` | 判斷規格、實作、測試與文件之間的真相來源。 |
+| `writing-business-policy` | 整併與精簡商業政策，保留會改變商業結果的條件、例外與取捨。 |
 | `ai-change-review-guardrails` | 撰寫或審查 AI 生成、大範圍修改的風險、假設、可讀性與 blast radius。 |
 | `test-review-sop` | 新增、修改、刪除或審查測試時使用。 |
 | `git-commit-workflow` | 暫存、拆分、檢查與建立 commit。 |

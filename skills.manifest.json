@@ -96,6 +96,14 @@
       "stability": "draft"
     },
     {
+      "name": "writing-business-policy",
+      "scope": "common",
+      "path": "skills/writing-business-policy",
+      "entrypoint": "SKILL.md",
+      "description": "Use when drafting, merging, or shortening product and business policy documents from specs or discussions for business, product, and engineering readers, especially when decisions are buried in implementation details or cannot be safely inferred from familiar product patterns.",
+      "stability": "draft"
+    },
+    {
       "name": "ai-change-review-guardrails",
       "scope": "common",
       "path": "skills/ai-change-review-guardrails",
