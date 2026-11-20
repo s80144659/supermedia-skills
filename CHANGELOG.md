@@ -4,13 +4,12 @@
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-11-20
+
 - `iterating-product-ui` 明訂不自行覆寫實例或填寫元件描述；以同寬比對驗證共用外觀，保留浮動註記語意與指向並強制替換前後截圖，檢查連結直達實例。
-
 - 新增 `iterating-product-ui`：依使用情境迭代既有畫面，精簡元件屬性並保留註記語意，以實際頁面驗證、文字定位連結與簡要需求交付，依要求保留額外展示稿。
-
 - `writing-business-policy` 補充完整論述段落、閱讀版面檢查，以及多人／多 AI 協作時的最新內容核對與局部更新原則。
 - 新增 `writing-business-policy`：現階段依 Minto 金字塔原理組織文件、DMN 決策模型與標記法表達決策、STE 原則修整中文；以專案風格圖片建立框架、文章式展開的可搜尋文字保留條件，逐步沉澱團隊寫法。
-
 - `laravel-scramble-api-docs` 明訂 `@mixin` 必須寫完整類名，短類名會讓 model inference 靜默消失。
 - `laravel-scramble-api-docs` 補充 Form Request 推導缺口：依角色組的 `Rule::in()` 文件只會列出無身分分支、陣列參數描述要寫在 `.*` 規則前、多行描述要條列就整段以 `-` 開頭。
 
